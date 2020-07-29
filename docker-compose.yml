@@ -15,24 +15,24 @@ services:
     restart: on-failure
     environment:
       MYSQL_RANDOM_ROOT_PASSWORD: "yes"
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: example
+      MYSQL_USER: user
+      MYSQL_PASSWORD: user
 
   adminer:
     image: adminer
     restart: on-failure
     ports:
-      - ${ADMINER_PORT}:8080
+      - ${ADMINER_PORT-8080}:8080
 
   node:
     image: node:10
     volumes:
       - ./app:/home/node/app
     working_dir: /home/node/app
-    user: ${LOCAL_USER}
+    user: ${LOCAL_USER:-1000}
 
   etherpad:
     image: etherpad/etherpad
     ports:
-      - ${ETHERPAD_PORT}:9001
+      - ${ETHERPAD_PORT:-9001}:9001

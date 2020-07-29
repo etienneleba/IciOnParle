@@ -14,22 +14,22 @@ stop:
 
 cmd?=list
 console: 
-	docker-compose run --rm php php bin/console $(cmd)
+	docker-compose run --rm symfony php bin/console $(cmd)
 
 schema-update:
-	docker-compose run --rm php php bin/console doctrine:schema:update -f 
+	docker-compose run --rm symfony php bin/console doctrine:schema:update -f 
 
 cache-clear:
-	docker-compose run --rm php php bin/console cache:clear 
+	docker-compose run --rm symfony php bin/console cache:clear 
 
 cache-warm:
-	docker-compose run --rm php php bin/console cache:warm 
+	docker-compose run --rm symfony php bin/console cache:warm 
 
 composer-require:
-	docker-compose run --rm composer require $(req)
+	docker-compose run --rm symfony composer require $(req)
 
 composer-install: 
-	docker-compose run --rm composer install 
+	docker-compose run --rm symfony composer install 
 
 yarn-install:
 	# To be log as the node user on the container and be allowed to use the npm/yarn cache (if you have a better way pls tell me)
@@ -52,26 +52,3 @@ deploy-test:
 
 build-symfony-project : composer-install yarn-install yarn-build cache-clear #if you use symfony encore
 
-phpunit-install: 
-	docker-compose run --rm composer php ./vendor/bin/simple-phpunit
-
-phpunit: 
-	docker-compose run --rm php bash -c "DATABASE_URL=sqlite:///%kernel.cache_dir%/test.db TYPESENSE_URL='null' ./vendor/bin/simple-phpunit"
-
-phpunit-filter:
-	docker-compose run --rm php bash -c "DATABASE_URL=sqlite:///%kernel.cache_dir%/test.db TYPESENSE_URL='null' ./vendor/bin/simple-phpunit --filter $(filter)"
-
-phpunit-coverage:
-	docker-compose run --rm php php ./vendor/bin/simple-phpunit --coverage-text
-
-phpunit-coverage-html:
-	docker-compose run --rm php php ./vendor/bin/simple-phpunit --coverage-html ./report
-
-migrations-execute:
-	docker-compose run --rm php php bin/console doctrine:migrations:execute $(v)
-
-typesense-create:
-	docker-compose run --rm php php bin/console typesense:create
-
-typesense-populate:
-	docker-compose run --rm php php bin/console typesense:populate
