@@ -14,3 +14,9 @@ The goal of this project is to create a POC of a citizen deliberative assembly.
 - [Sitemap](https://drive.google.com/file/d/1e6zUstT--XNZLoegoA2Gr7LOxsxqnyXK/view?usp=sharing)
 
 ## Technologies
+
+- [PHP 7.4](https://www.php.net/docs.php)
+- [Symfony 5.1](https://symfony.com/doc/current/index.html)
+- [Webpack Encore](https://symfony.com/doc/current/frontend.html)
+- [Bulma](https://bulma.io/documentation/)
+- [Etherpad 1.8.4](https://etherpad.org)
