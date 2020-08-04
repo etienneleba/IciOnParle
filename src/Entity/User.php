@@ -3,11 +3,15 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
  */
 class User implements UserInterface
 {
@@ -26,13 +30,50 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="json")
      */
-    private $roles = [];
+    private $roles = ['ROLE_USER'];
 
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
      */
     private $password;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isVerified = false;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $firstname;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $lastname;
+
+    /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private $socialNetworks = [];
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Group::class, mappedBy="users")
+     */
+    private $groups;
+
+    /**
+     * @ORM\OneToMany(targetEntity=UserEvent::class, mappedBy="user", orphanRemoval=true)
+     */
+    private $userEvents;
+
+    public function __construct()
+    {
+        $this->events = new ArrayCollection();
+        $this->groups = new ArrayCollection();
+        $this->userEvents = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -110,5 +151,112 @@ class User implements UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function isVerified(): bool
+    {
+        return $this->isVerified;
+    }
+
+    public function setIsVerified(bool $isVerified): self
+    {
+        $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    public function getFirstname(): ?string
+    {
+        return $this->firstname;
+    }
+
+    public function setFirstname(string $firstname): self
+    {
+        $this->firstname = $firstname;
+
+        return $this;
+    }
+
+    public function getLastname(): ?string
+    {
+        return $this->lastname;
+    }
+
+    public function setLastname(string $lastname): self
+    {
+        $this->lastname = $lastname;
+
+        return $this;
+    }
+
+    public function getSocialNetworks(): ?array
+    {
+        return $this->socialNetworks;
+    }
+
+    public function setSocialNetworks(?array $socialNetworks): self
+    {
+        $this->socialNetworks = $socialNetworks;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Group[]
+     */
+    public function getGroups(): Collection
+    {
+        return $this->groups;
+    }
+
+    public function addGroup(Group $group): self
+    {
+        if (!$this->groups->contains($group)) {
+            $this->groups[] = $group;
+            $group->addUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeGroup(Group $group): self
+    {
+        if ($this->groups->contains($group)) {
+            $this->groups->removeElement($group);
+            $group->removeUser($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|UserEvent[]
+     */
+    public function getUserEvents(): Collection
+    {
+        return $this->userEvents;
+    }
+
+    public function addUserEvent(UserEvent $userEvent): self
+    {
+        if (!$this->userEvents->contains($userEvent)) {
+            $this->userEvents[] = $userEvent;
+            $userEvent->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserEvent(UserEvent $userEvent): self
+    {
+        if ($this->userEvents->contains($userEvent)) {
+            $this->userEvents->removeElement($userEvent);
+            // set the owning side to null (unless already changed)
+            if ($userEvent->getUser() === $this) {
+                $userEvent->setUser(null);
+            }
+        }
+
+        return $this;
     }
 }

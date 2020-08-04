@@ -14,22 +14,22 @@ stop:
 
 cmd?=list
 console: 
-	docker-compose run --rm symfony php bin/console $(cmd)
+	docker-compose run --rm php php bin/console $(cmd)
 
 schema-update:
-	docker-compose run --rm symfony php bin/console doctrine:schema:update -f 
+	docker-compose run --rm php php bin/console doctrine:schema:update -f 
 
 cache-clear:
-	docker-compose run --rm symfony php bin/console cache:clear 
+	docker-compose run --rm php php bin/console cache:clear 
 
 cache-warm:
-	docker-compose run --rm symfony php bin/console cache:warm 
+	docker-compose run --rm php php bin/console cache:warm 
 
 composer-require:
-	docker-compose run --rm symfony composer require $(req)
+	docker-compose run --rm php composer require $(req)
 
 composer-install: 
-	docker-compose run --rm symfony composer install 
+	docker-compose run --rm php composer install 
 
 yarn-install:
 	# To be log as the node user on the container and be allowed to use the npm/yarn cache (if you have a better way pls tell me)

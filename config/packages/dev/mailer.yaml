@@ -1,0 +1,3 @@
+framework:
+  mailer:
+    dsn: "smtp://mail:1025?encryption=null&auth_mode=null"
