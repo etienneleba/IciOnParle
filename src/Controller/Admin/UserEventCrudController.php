@@ -2,22 +2,14 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Event;
-use DateTime;
+use App\Entity\UserEvent;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
-class EventCrudController extends AbstractCrudController
+class UserEventCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return Event::class;
-    }
-
-    public function createEntity(string $entityFqcn)
-    {
-        return (new Event())
-            ->setCreatedAt(new DateTime())
-        ;
+        return UserEvent::class;
     }
 
     /*

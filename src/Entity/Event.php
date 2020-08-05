@@ -6,6 +6,7 @@ use App\Repository\EventRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=EventRepository::class)
@@ -90,7 +91,8 @@ class Event
     private $sources;
 
     /**
-     * @ORM\OneToMany(targetEntity=UserEvent::class, mappedBy="event", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=UserEvent::class, mappedBy="event", orphanRemoval=true, cascade={"persist", "remove"})
+     * @Assert\Valid
      */
     private $userEvents;
 
@@ -99,6 +101,23 @@ class Event
         $this->steps = new ArrayCollection();
         $this->sources = new ArrayCollection();
         $this->userEvents = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->title;
+    }
+
+    public function isRegistered(User $user)
+    {
+        /** @var UserEvent $userEvent */
+        foreach ($this->userEvents as $userEvent) {
+            if ($userEvent->getUser()->getId() == $user->getId()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public function getId(): ?int

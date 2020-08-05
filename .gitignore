@@ -20,5 +20,5 @@ yarn-error.log
 ###< symfony/webpack-encore-bundle ###
 
 ###> data ###
-/data
+/data/*
 ###> data ###

@@ -3,12 +3,13 @@
 namespace App\Repository;
 
 use App\Entity\Event;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method Event|null find($id, $lockMode = null, $lockVersion = null)
- * @method Event|null findOneBy(array $criteria, array $orderBy = null)
+ * @method null|Event find($id, $lockMode = null, $lockVersion = null)
+ * @method null|Event findOneBy(array $criteria, array $orderBy = null)
  * @method Event[]    findAll()
  * @method Event[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
@@ -17,6 +18,31 @@ class EventRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Event::class);
+    }
+
+    public function findAllWithUser(User $user)
+    {
+        return $this->createQueryBuilder('e')
+            ->andWhere('ue.user = :id')
+            ->leftJoin('e.userEvents', 'ue')
+            ->setParameter('id', $user->getId())
+            ->orderBy('e.startDate', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function findAllWithoutUser(User $user)
+    {
+        return $this->createQueryBuilder('e')
+            ->andWhere('ue.user != :id')
+            ->orWhere('ue.user is NULL')
+            ->leftJoin('e.userEvents', 'ue')
+            ->setParameter('id', $user->getId())
+            ->orderBy('e.startDate', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
     }
 
     // /**

@@ -7,4 +7,40 @@
 {% block body %}
 	<h1>Dashbaord</h1>
 	<a href="{{ path('app_logout')}}">logout</a>
+
+	<h1>Evénements inscrits</h1>
+
+	{% for event in userEvents %}
+		<div>
+			<h4>{{ event.title}}
+				-
+				{{ event.startDate | date("d/m/Y", "Europe/Paris")}}
+				-
+				{{ event.userEvents | length}}
+				/
+				{{ event.nbMaxUser}}</h4>
+			<p>{{ event.description}}</p>
+		</div>
+		<a href="{{ path('app_event_view', {id: event.id})}}">Voir</a><br>
+		=========================================================
+		<br><br>
+	{% endfor %}
+
+	<h1>Evénements</h1>
+
+	{% for event in events %}
+		<div>
+			<h4>{{ event.title}}
+				-
+				{{ event.startDate | date("d/m/Y", "Europe/Paris")}}
+				-
+				{{ event.userEvents | length}}
+				/
+				{{ event.nbMaxUser}}</h4>
+			<p>{{ event.description}}</p>
+		</div>
+		<a href="{{ path('app_event_view', {id: event.id})}}">Voir</a><br>
+		=========================================================
+		<br><br>
+	{% endfor %}
 {% endblock %}

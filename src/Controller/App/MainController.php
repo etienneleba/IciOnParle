@@ -2,6 +2,8 @@
 
 namespace App\Controller\App;
 
+use App\Entity\Event;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -13,8 +15,15 @@ class MainController extends AbstractController
     /**
      * @Route("/dashboard", name="dashboard")
      */
-    public function dashboard()
+    public function dashboard(EntityManagerInterface $em)
     {
-        return $this->render('app/main/dashboard.html.twig');
+        $userEvents = $em->getRepository(Event::class)->findAllWithUser($this->getUser());
+
+        $events = $em->getRepository(Event::class)->findAllWithoutUser($this->getUser());
+
+        return $this->render('app/main/dashboard.html.twig', [
+            'userEvents' => $userEvents,
+            'events' => $events,
+        ]);
     }
 }

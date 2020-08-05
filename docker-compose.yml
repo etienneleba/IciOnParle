@@ -3,7 +3,8 @@ version: "3.3"
 services:
   php:
     build:
-      context: ./docker/php
+      context: .
+      dockerfile: ./docker/php/Dockerfile
       args:
         USER_ID: ${LOCAL_USER}
         GROUP_ID: ${LOCAL_USER}
@@ -15,6 +16,7 @@ services:
     depends_on:
       - db
     user: ${LOCAL_USER}
+    working_dir: /usr/src
 
   nginx:
     image: nginx:1.15.3-alpine
@@ -35,6 +37,8 @@ services:
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    volumes:
+      - ./data:/var/lib/mysql
 
   adminer:
     image: adminer

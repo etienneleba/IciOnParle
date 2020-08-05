@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ parent()}}
+{% endblock %}
+
+{% block body %}
+	<h1>{{ event.title }}
+		-
+		{{ event.startDate | date("d/m/Y", "Europe/Paris")}}</h1>
+
+	<p>{{ event.description}}</p>
+	{% if not registered %}
+		<a href="{{ path('app_event_register', {id: event.id})}}">S'inscrire</a>
+	{% else %}
+		<a href="{{ path('app_event_unregister', {id: event.id})}}">Se désinscrire</a>
+	{% endif %}
+
+
+	<br><br>
+
+	<h2>Participants</h2>
+
+	{% for userEvent in event.userEvents %}
+		{{ userEvent.user }}
+		<br>
+	{% endfor %}
+{% endblock %}

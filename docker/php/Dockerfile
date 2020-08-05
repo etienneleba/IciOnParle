@@ -18,4 +18,13 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/ 
 
 # ADD xdebug.ini /usr/local/etc/php/conf.d/
 
+ARG USER_ID
+ARG GROUP_ID
+
+RUN groupadd -f --gid $GROUP_ID user
+RUN adduser --disabled-password --gecos '' --uid $USER_ID --gid $GROUP_ID user
+USER user
+
 WORKDIR /usr/src/
+
+COPY ./ /usr/src/

@@ -4,9 +4,15 @@ namespace App\Entity;
 
 use App\Repository\UserEventRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=UserEventRepository::class)
+ * @UniqueEntity(
+ *     fields={"user", "event"},
+ *     errorPath="user",
+ *     message="Vous avez déjà rejoint cette événement"
+ * )
  */
 class UserEvent
 {
