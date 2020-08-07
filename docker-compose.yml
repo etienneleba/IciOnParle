@@ -57,6 +57,9 @@ services:
     image: etherpad/etherpad
     ports:
       - ${ETHERPAD_PORT}:9001
+    volumes:
+      - ./Etherpad/APIKEY.txt:/opt/etherpad-lite/APIKEY.txt
+      - ./Etherpad/SESSIONKEY.txt:/opt/etherpad-lite/SESSIONKEY.txt
 
   mail:
     image: schickling/mailcatcher

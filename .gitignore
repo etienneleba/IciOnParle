@@ -22,3 +22,10 @@ yarn-error.log
 ###> data ###
 /data/*
 ###> data ###
+
+###> etherpad ###
+/Etherpad/APIKEY.txt
+/Etherpad/SESSIONKEY.txt
+###> etherpad ###
+
+
