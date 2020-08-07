@@ -3,6 +3,8 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Event;
+use App\Entity\Group;
+use App\Service\EtherpadClient;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
@@ -23,9 +25,13 @@ class EventCrudController extends AbstractCrudController
     /** @var EntityManagerInterface */
     private $em;
 
-    public function __construct(EntityManagerInterface $em)
+    /** @var EtherpadClient */
+    private $etherpadClient;
+
+    public function __construct(EntityManagerInterface $em, EtherpadClient $etherpadClient)
     {
         $this->em = $em;
+        $this->etherpadClient = $etherpadClient;
     }
 
     public static function getEntityFqcn(): string
@@ -87,7 +93,15 @@ class EventCrudController extends AbstractCrudController
     {
         /** @var Event $event */
         $event = $adminContext->getEntity()->getInstance();
-        $event->addStep($event->nextStep($event->getCurrentStep()));
+        $newStep = $event->nextStep($event->getCurrentStep());
+
+        /** @var Group $group */
+        foreach ($newStep->getGroups() as $group) {
+            $group->setEtherpadGroupId($this->etherpadClient->createGroup());
+            $group->setEtherpadPadId($this->etherpadClient->createGroupPad($group->getEtherpadGroupId()));
+        }
+
+        $event->addStep($newStep);
 
         $this->em->flush();
 
@@ -98,7 +112,24 @@ class EventCrudController extends AbstractCrudController
     {
         /** @var Event $event */
         $event = $adminContext->getEntity()->getInstance();
-        $event->addStep($event->nextStep($event->getCurrentStep()));
+
+        $currentStep = $event->getCurrentStep();
+
+        /** @var Group $group */
+        foreach ($currentStep->getGroups() as $group) {
+            $group->setFinalText($this->etherpadClient->getHTML($group->getEtherpadPadId()));
+            $this->etherpadClient->deleteGroup($group->getEtherpadGroupId());
+        }
+
+        $newStep = $event->nextStep($currentStep);
+
+        /** @var Group $group */
+        foreach ($newStep->getGroups() as $group) {
+            $group->setEtherpadGroupId($this->etherpadClient->createGroup());
+            $group->setEtherpadPadId($this->etherpadClient->createGroupPad($group->getEtherpadGroupId()));
+        }
+
+        $event->addStep($newStep);
 
         $this->em->flush();
 
@@ -110,6 +141,14 @@ class EventCrudController extends AbstractCrudController
         /** @var Event $event */
         $event = $adminContext->getEntity()->getInstance();
         $event->setFinished(true);
+
+        $currentStep = $event->getCurrentStep();
+
+        /** @var Group $group */
+        foreach ($currentStep->getGroups() as $group) {
+            $group->setFinalText($this->etherpadClient->getHTML($group->getEtherpadPadId()));
+            $this->etherpadClient->deleteGroup($group->getEtherpadGroupId());
+        }
 
         $this->em->flush();
 

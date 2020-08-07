@@ -204,7 +204,6 @@ class Event
                 $newGroup->addUser($users[$j]);
                 ++$j;
             }
-            $newGroup->setEtherpadId('test');
             $newStep->addGroup($newGroup);
         }
 

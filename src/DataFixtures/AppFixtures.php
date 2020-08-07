@@ -53,11 +53,11 @@ class AppFixtures extends Fixture
 
         $manager->persist($event);
 
-        $populator->addEntity(User::class, 500, [
+        $populator->addEntity(User::class, 100, [
             'isVerified' => true,
         ], [
             function (User $user) use ($faker, $event) {
-                $user->setPassword($this->encoder->encodePassword($user, $faker->password(8, 20)));
+                $user->setPassword($this->encoder->encodePassword($user, '00000000'));
                 $userEvent = (new UserEvent())
                     ->setUser($user)
                     ->setEvent($event)

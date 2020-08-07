@@ -26,11 +26,6 @@ class Group
     private $users;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $etherpadId;
-
-    /**
      * @ORM\Column(type="text", nullable=true)
      */
     private $finalText;
@@ -40,6 +35,16 @@ class Group
      * @ORM\JoinColumn(nullable=false)
      */
     private $step;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $etherpadGroupId;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $etherpadPadId;
 
     public function __construct()
     {
@@ -82,18 +87,6 @@ class Group
         return $this;
     }
 
-    public function getEtherpadId(): ?string
-    {
-        return $this->etherpadId;
-    }
-
-    public function setEtherpadId(string $etherpadId): self
-    {
-        $this->etherpadId = $etherpadId;
-
-        return $this;
-    }
-
     public function getFinalText(): ?string
     {
         return $this->finalText;
@@ -114,6 +107,30 @@ class Group
     public function setStep(?Step $step): self
     {
         $this->step = $step;
+
+        return $this;
+    }
+
+    public function getEtherpadGroupId(): ?string
+    {
+        return $this->etherpadGroupId;
+    }
+
+    public function setEtherpadGroupId(string $etherpadGroupId): self
+    {
+        $this->etherpadGroupId = $etherpadGroupId;
+
+        return $this;
+    }
+
+    public function getEtherpadPadId(): ?string
+    {
+        return $this->etherpadPadId;
+    }
+
+    public function setEtherpadPadId(string $etherpadPadId): self
+    {
+        $this->etherpadPadId = $etherpadPadId;
 
         return $this;
     }
