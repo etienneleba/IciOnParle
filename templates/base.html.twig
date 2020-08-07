@@ -11,6 +11,8 @@
 		{% endblock %}
 	</head>
 	<body>
+		<a href="{{ path('app_dashboard')}}">Dashboard</a>
+		<a href="{{ path('app_user_profile')}}">Profile</a>
 		{% block body %}{% endblock %}
 		{% block javascripts %}
 			{{ encore_entry_script_tags('app') }}

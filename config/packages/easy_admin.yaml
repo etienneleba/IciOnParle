@@ -4,3 +4,5 @@ easy_admin:
     - App\Entity\User
     - App\Entity\Event
     - App\Entity\UserEvent
+    - App\Entity\SocialNetwork
+    - App\Entity\SocialNetworkType

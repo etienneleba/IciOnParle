@@ -54,11 +54,6 @@ class User implements UserInterface
     private $lastname;
 
     /**
-     * @ORM\Column(type="array", nullable=true)
-     */
-    private $socialNetworks = [];
-
-    /**
      * @ORM\ManyToMany(targetEntity=Group::class, mappedBy="users")
      */
     private $groups;
@@ -68,11 +63,17 @@ class User implements UserInterface
      */
     private $userEvents;
 
+    /**
+     * @ORM\OneToMany(targetEntity=SocialNetwork::class, mappedBy="user")
+     */
+    private $socialNetworks;
+
     public function __construct()
     {
         $this->events = new ArrayCollection();
         $this->groups = new ArrayCollection();
         $this->userEvents = new ArrayCollection();
+        $this->socialNetworks = new ArrayCollection();
     }
 
     public function __toString()
@@ -194,18 +195,6 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getSocialNetworks(): ?array
-    {
-        return $this->socialNetworks;
-    }
-
-    public function setSocialNetworks(?array $socialNetworks): self
-    {
-        $this->socialNetworks = $socialNetworks;
-
-        return $this;
-    }
-
     /**
      * @return Collection|Group[]
      */
@@ -259,6 +248,37 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($userEvent->getUser() === $this) {
                 $userEvent->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|SocialNetwork[]
+     */
+    public function getSocialNetworks(): Collection
+    {
+        return $this->socialNetworks;
+    }
+
+    public function addSocialNetwork(SocialNetwork $socialNetwork): self
+    {
+        if (!$this->socialNetworks->contains($socialNetwork)) {
+            $this->socialNetworks[] = $socialNetwork;
+            $socialNetwork->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSocialNetwork(SocialNetwork $socialNetwork): self
+    {
+        if ($this->socialNetworks->contains($socialNetwork)) {
+            $this->socialNetworks->removeElement($socialNetwork);
+            // set the owning side to null (unless already changed)
+            if ($socialNetwork->getUser() === $this) {
+                $socialNetwork->setUser(null);
             }
         }
 

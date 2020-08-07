@@ -46,6 +46,11 @@ class Group
         $this->users = new ArrayCollection();
     }
 
+    public function getRandomUser()
+    {
+        return $this->users[rand(0, count($this->users) - 1)];
+    }
+
     public function getId(): ?int
     {
         return $this->id;

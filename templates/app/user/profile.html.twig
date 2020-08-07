@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ parent()}}Profile
+{% endblock %}
+
+{% block body %}
+	<h1>Profile</h1>
+	{{ user }}
+	<br>
+	{{ user.email}}
+	<br>
+	{% for socialNetwork in user.socialNetworks %}
+		{{ socialNetwork.socialNetworkType.name }}
+		:
+		{{ socialNetwork.link }}
+	{% endfor %}
+{% endblock %}

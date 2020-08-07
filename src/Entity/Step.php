@@ -31,13 +31,33 @@ class Step
     private $event;
 
     /**
-     * @ORM\OneToMany(targetEntity=Group::class, mappedBy="step", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Group::class, mappedBy="step", orphanRemoval=true, cascade={"persist", "remove"})
      */
     private $groups;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $finalStep = false;
 
     public function __construct()
     {
         $this->groups = new ArrayCollection();
+    }
+
+    public function getNbParticipants()
+    {
+        $nb = 0;
+        foreach ($this->getGroups() as $group) {
+            $nb += count($group->getUsers());
+        }
+
+        return $nb;
+    }
+
+    public function getNbGroups()
+    {
+        return count($this->getGroups());
     }
 
     public function getId(): ?int
@@ -96,6 +116,18 @@ class Step
                 $group->setStep(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getFinalStep(): ?bool
+    {
+        return $this->finalStep;
+    }
+
+    public function setFinalStep(bool $finalStep): self
+    {
+        $this->finalStep = $finalStep;
 
         return $this;
     }

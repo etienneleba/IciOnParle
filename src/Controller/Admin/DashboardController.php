@@ -3,6 +3,10 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Event;
+use App\Entity\Group;
+use App\Entity\SocialNetwork;
+use App\Entity\SocialNetworkType;
+use App\Entity\Step;
 use App\Entity\User;
 use App\Entity\UserEvent;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
@@ -32,8 +36,12 @@ class DashboardController extends AbstractDashboardController
     {
         yield MenuItem::linktoRoute('IciOnParle', 'fa fa-comments', 'app_dashboard');
         yield MenuItem::linktoDashboard('Dashboard', 'fa fa-home');
-        yield MenuItem::linkToCrud('User', 'fa fa-users', User::class);
+        yield MenuItem::linkToCrud('User', 'fa fa-user', User::class);
         yield MenuItem::linkToCrud('Event', 'fa fa-calendar-day', Event::class);
-        yield MenuItem::linkToCrud('Event', 'fa fa-user-plus', UserEvent::class);
+        yield MenuItem::linkToCrud('Step', 'fa fa-check', Step::class);
+        yield MenuItem::linkToCrud('Group', 'fa fa-users', Group::class);
+        yield MenuItem::linkToCrud('UserEvent', 'fa fa-user-plus', UserEvent::class);
+        yield MenuItem::linkToCrud('SocialNetwork', 'fa fa-project-diagram', SocialNetwork::class);
+        yield MenuItem::linkToCrud('SocialNetworkType', 'fa fa-project-diagram', SocialNetworkType::class);
     }
 }

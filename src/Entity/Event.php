@@ -63,11 +63,6 @@ class Event
     /**
      * @ORM\Column(type="integer")
      */
-    private $nbMaxUsersPerGroup;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
     private $nbMinUsersPerGroup;
 
     /**
@@ -81,7 +76,7 @@ class Event
     private $createdAt;
 
     /**
-     * @ORM\OneToMany(targetEntity=Step::class, mappedBy="event", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Step::class, mappedBy="event", orphanRemoval=true, cascade={"persist", "remove"})
      */
     private $steps;
 
@@ -95,6 +90,16 @@ class Event
      * @Assert\Valid
      */
     private $userEvents;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $started = false;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $finished = false;
 
     public function __construct()
     {
@@ -118,6 +123,110 @@ class Event
         }
 
         return false;
+    }
+
+    public function getCurrentStep(): ?Step
+    {
+        if (0 == count($this->getSteps())) {
+            return null;
+        }
+
+        $returnStep = null;
+
+        /** @var Step $step */
+        foreach ($this->getSteps() as $step) {
+            if (null == $returnStep) {
+                $returnStep = $step;
+            } elseif ($step->getRank() > $returnStep->getRank()) {
+                $returnStep = $step;
+            }
+        }
+
+        return $step;
+    }
+
+    public function isFinalStep()
+    {
+        $finalStep = false;
+        foreach ($this->getSteps() as $step) {
+            if ($step->getFinalStep()) {
+                $finalStep = true;
+            }
+        }
+
+        return $finalStep;
+    }
+
+    public function nextStep(?Step $step): Step
+    {
+        $users = [];
+        $newStep = new Step();
+        if (null === $step) {
+            $this->setStarted(true);
+            $userEvents = $this->getUserEvents();
+            /** @var UserEvent $userEvent */
+            foreach ($userEvents as $userEvent) {
+                $users[] = $userEvent->getUser();
+            }
+            // TODO : https://stackoverflow.com/questions/10762538/how-to-select-randomly-with-doctrine
+            shuffle($users);
+            $newStep->setRank(1);
+        } else {
+            $i = 0;
+            while (count($users) != count($step->getGroups())) {
+                $i = $i == count($step->getGroups()) ? 0 : $i;
+                $randomUser = $step->getGroups()[$i]->getRandomUser();
+                if (!in_array($randomUser, $users)) {
+                    $users[] = $randomUser;
+                    ++$i;
+                }
+            }
+            while (count($users) < $this->nbMinUsersFinalGroup) {
+                $i = $i == count($step->getGroups()) ? 0 : $i;
+                $randomUser = $step->getGroups()[$i]->getRandomUser();
+                if (!in_array($randomUser, $users)) {
+                    $users[] = $randomUser;
+                    ++$i;
+                }
+            }
+            $newStep->setRank($step->getRank() + 1);
+        }
+
+        $nbUsers = count($users);
+        $nbGroup = $nbUsers > $this->nbMinUsersFinalGroup ? floor($nbUsers / $this->nbMinUsersPerGroup) : 1;
+        if (1 == $nbGroup) {
+            $newStep->setFinalStep(true);
+        }
+        $j = 0;
+        for ($i = 0; $i < $nbGroup; ++$i) {
+            $newGroup = new Group();
+            for ($y = 0; $y < $this->getNbMinUsersPerGroup(); ++$y) {
+                $newGroup->addUser($users[$j]);
+                ++$j;
+            }
+            $newGroup->setEtherpadId('test');
+            $newStep->addGroup($newGroup);
+        }
+
+        $i = 0;
+        while ($j < count($users)) {
+            $i = $i == count($newStep->getGroups()) ? 0 : $i;
+            $newStep->getGroups()[$i]->addUser($users[$j]);
+            ++$j;
+            ++$i;
+        }
+
+        return $newStep;
+    }
+
+    public function getParticipants(): string
+    {
+        return count($this->userEvents).'/'.$this->nbMaxUser;
+    }
+
+    public function getStep()
+    {
+        return count($this->steps);
     }
 
     public function getId(): ?int
@@ -217,18 +326,6 @@ class Event
     public function setNbMaxUser(int $nbMaxUser): self
     {
         $this->nbMaxUser = $nbMaxUser;
-
-        return $this;
-    }
-
-    public function getNbMaxUsersPerGroup(): ?int
-    {
-        return $this->nbMaxUsersPerGroup;
-    }
-
-    public function setNbMaxUsersPerGroup(int $nbMaxUsersPerGroup): self
-    {
-        $this->nbMaxUsersPerGroup = $nbMaxUsersPerGroup;
 
         return $this;
     }
@@ -358,6 +455,30 @@ class Event
                 $userEvent->setEvent(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getStarted(): ?bool
+    {
+        return $this->started;
+    }
+
+    public function setStarted(bool $started): self
+    {
+        $this->started = $started;
+
+        return $this;
+    }
+
+    public function getFinished(): ?bool
+    {
+        return $this->finished;
+    }
+
+    public function setFinished(bool $finished): self
+    {
+        $this->finished = $finished;
 
         return $this;
     }
