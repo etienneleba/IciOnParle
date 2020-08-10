@@ -68,6 +68,11 @@ class User implements UserInterface
      */
     private $socialNetworks;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $etherpadAuthorId;
+
     public function __construct()
     {
         $this->events = new ArrayCollection();
@@ -281,6 +286,18 @@ class User implements UserInterface
                 $socialNetwork->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getEtherpadAuthorId(): ?string
+    {
+        return $this->etherpadAuthorId;
+    }
+
+    public function setEtherpadAuthorId(string $etherpadAuthorId): self
+    {
+        $this->etherpadAuthorId = $etherpadAuthorId;
 
         return $this;
     }

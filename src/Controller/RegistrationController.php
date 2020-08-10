@@ -4,8 +4,9 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\RegistrationFormType;
-use App\Security\EmailVerifier;
 use App\Security\AppAuthenticator;
+use App\Security\EmailVerifier;
+use App\Service\EtherpadClient;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,10 +20,13 @@ use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 class RegistrationController extends AbstractController
 {
     private $emailVerifier;
+    /** @var EtherpadClient */
+    private $etherpadClient;
 
-    public function __construct(EmailVerifier $emailVerifier)
+    public function __construct(EmailVerifier $emailVerifier, EtherpadClient $etherpadClient)
     {
         $this->emailVerifier = $emailVerifier;
+        $this->etherpadClient = $etherpadClient;
     }
 
     /**
@@ -43,12 +47,16 @@ class RegistrationController extends AbstractController
                 )
             );
 
+            $user->setEtherpadAuthorId($this->etherpadClient->createAuthor($user->__toString()));
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
 
             // generate a signed url and email it to the user
-            $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
+            $this->emailVerifier->sendEmailConfirmation(
+                'app_verify_email',
+                $user,
                 (new TemplatedEmail())
                     ->from(new Address('mailer@ici-on-parle.fr', 'IciOnParle'))
                     ->to($user->getEmail())

@@ -18,11 +18,19 @@
 
 
 	<br><br>
+	{% if group is null %}
+		<h2>Participants</h2>
 
-	<h2>Participants</h2>
+		{% for userEvent in event.userEvents %}
+			{{ userEvent.user }}
+			<br>
+		{% endfor %}
+	{% else %}
+		{% for user in group.users %}
+			<div>{{ user.email}}</div>
+		{% endfor %}
+	{% endif %}
 
-	{% for userEvent in event.userEvents %}
-		{{ userEvent.user }}
-		<br>
-	{% endfor %}
+	<iframe name="embed_readwrite" src="http://localhost:9001/p/{{ group.etherpadPadId}}" width="100%" height="700" frameborder="0"></iframe>
+
 {% endblock %}

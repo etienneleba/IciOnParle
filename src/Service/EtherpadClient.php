@@ -50,6 +50,26 @@ class EtherpadClient
         return $content['data']['html'];
     }
 
+    public function createAuthor(string $name): string
+    {
+        $content = $this->api('createAuthor', [
+            'name' => $name,
+        ]);
+
+        return $content['data']['authorID'];
+    }
+
+    public function createSession(string $groupId, string $authorId, int $validUntil)
+    {
+        $content = $this->api('createSession', [
+            'groupID' => $groupId,
+            'authorID' => $authorId,
+            'validUntil' => $validUntil,
+        ]);
+
+        return $content['data']['sessionID'];
+    }
+
     private function api(string $endpoint, array $data): array
     {
         $keysValues = '';

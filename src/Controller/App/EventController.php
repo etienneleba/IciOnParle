@@ -8,6 +8,7 @@ use App\Entity\UserEvent;
 use App\Service\EtherpadClient;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\ConstraintViolationInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -29,13 +30,24 @@ class EventController extends AbstractController
      */
     public function view(Event $event, EntityManagerInterface $em)
     {
+        /** @var Group $group */
         $group = $em->getRepository(Group::class)->findOneByUserEventStep($this->getUser(), $event, $event->getCurrentStep());
 
-        return $this->render('app/event/view.html.twig', [
+        $validUntil = strtotime('+1 day');
+
+        $sessionId = $this->etherpadClient->createSession($group->getEtherpadGroupId(), $this->getUser()->getEtherpadAuthorId(), $validUntil);
+
+        $cookie = Cookie::create('sessionID')->withValue($sessionId)->withHttpOnly(false)->withSameSite('none');
+
+        $response = $this->render('app/event/view.html.twig', [
             'group' => $group,
             'event' => $event,
             'registered' => $event->isRegistered($this->getUser()),
         ]);
+
+        $response->headers->setCookie($cookie);
+
+        return $response;
     }
 
     /**

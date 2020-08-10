@@ -5,6 +5,7 @@ namespace App\DataFixtures;
 use App\Entity\Event;
 use App\Entity\User;
 use App\Entity\UserEvent;
+use App\Service\EtherpadClient;
 use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -16,9 +17,13 @@ class AppFixtures extends Fixture
 {
     private $encoder;
 
-    public function __construct(UserPasswordEncoderInterface $encoder)
+    /** @var EtherpadClient */
+    private $etherpadClient;
+
+    public function __construct(UserPasswordEncoderInterface $encoder, EtherpadClient $etherpadClient)
     {
         $this->encoder = $encoder;
+        $this->etherpadClient = $etherpadClient;
     }
 
     public function load(ObjectManager $manager)
@@ -35,6 +40,7 @@ class AppFixtures extends Fixture
             ->setRoles(['ROLE_ADMIN'])
         ;
         $admin->setPassword($this->encoder->encodePassword($admin, '00000000'));
+        $admin->setEtherpadAuthorId($this->etherpadClient->createAuthor($admin->__toString()));
 
         $manager->persist($admin);
 
@@ -64,6 +70,7 @@ class AppFixtures extends Fixture
                     ->setNbSources(0)
                 ;
                 $event->addUserEvent($userEvent);
+                $user->setEtherpadAuthorId($this->etherpadClient->createAuthor($user->__toString()));
             },
         ]);
 
