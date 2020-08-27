@@ -3,13 +3,14 @@
 html {
   padding: 0;
   margin: 0;
+  background-color: #f6f6f6;
 }
 
 body {
-  background-color: #f6f6f6;
-  min-height: 100vh;
+  min-height: -webkit-fill-available;
   padding: 0;
   margin: 0;
+  position: relative;
 }
 
 nav {
@@ -32,5 +33,23 @@ nav {
 
   section.is-active {
     display: block;
+  }
+}
+
+#embed-etherpad {
+  position: absolute;
+  height: calc(100vh - 220px);
+  top: 150px;
+  width: 100vw;
+  left: 0;
+  right: 0;
+}
+
+@media screen and (min-width: 600px) {
+  #embed-etherpad {
+    position: relative;
+    height: 70vh;
+    top: 0;
+    width: 100%;
   }
 }

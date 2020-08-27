@@ -47,7 +47,7 @@ class EventController extends AbstractController
 
         $sessionId = $this->etherpadClient->createSession($group->getEtherpadGroupId(), $this->getUser()->getEtherpadAuthorId(), $validUntil);
 
-        $cookie = Cookie::create('sessionID')->withValue($sessionId)->withHttpOnly(false)->withSameSite('none');
+        $cookie = Cookie::create('sessionID')->withValue($sessionId)->withHttpOnly(false);
 
         $response = $this->render('app/event/view.html.twig', [
             'group' => $group,
