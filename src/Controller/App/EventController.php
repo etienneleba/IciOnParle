@@ -4,11 +4,14 @@ namespace App\Controller\App;
 
 use App\Entity\Event;
 use App\Entity\Group;
+use App\Entity\Source;
 use App\Entity\UserEvent;
+use App\Form\SourceType;
 use App\Service\EtherpadClient;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Cookie;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\ConstraintViolationInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -112,5 +115,29 @@ class EventController extends AbstractController
         return $this->render('app/event/finished.html.twig', [
             'event' => $event,
         ]);
+    }
+
+    /**
+     * @Route("/addSource/{id}", name="addSource")
+     */
+    public function addSource(Request $request, Event $event, EntityManagerInterface $em)
+    {
+        $source = (new Source())
+            ->setEvent($event)
+        ;
+
+        $form = $this->createForm(SourceType::class, $source);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $event->addSource($source);
+
+            $em->persist($source);
+
+            $em->flush();
+        }
+
+        return $this->redirectToRoute('app_event_view', ['id' => $event->getId(), 'tab' => 'library']);
     }
 }

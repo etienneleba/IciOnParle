@@ -1,0 +1,16 @@
+{% extends "modals/base.html.twig" %}
+
+{% set modalID = 'modalAddSource'%}
+
+{% set active = false %}
+
+{% block content %}
+	{% if sourceForm is not defined %}
+		{% set sourceForm = formGenerator.sourceForm(event.id) %}
+	{% endif %}
+
+	{{form_start(sourceForm)}}
+	<button type="submit" class="button is-small is-primary">Créer</button>
+	{{form_end(sourceForm)}}
+
+{% endblock %}

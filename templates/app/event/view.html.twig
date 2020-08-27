@@ -5,27 +5,26 @@
 {% endblock %}
 
 {% block body %}
-
 	<div class="tabs is-centered">
 		<ul>
-			<li class="is-active">
+			<li class="{{ app.request.get('tab') == 'pad' or app.request.get('tab') is null ? 'is-active'}}">
 				<a data-target="pad" onclick="toggleTab()">Pad</a>
 			</li>
-			<li>
+			<li class="{{ app.request.get('tab') == 'info' ? 'is-active'}}">
 				<a data-target="info" onclick="toggleTab()">Info</a>
 			</li>
-			<li>
-				<a data-target="librairy" onclick="toggleTab()">Bibliothèque</a>
+			<li class="{{ app.request.get('tab') == 'library' ? 'is-active'}}">
+				<a data-target="library" onclick="toggleTab()">Bibliothèque</a>
 			</li>
 		</ul>
 	</div>
 
 	<div class="tabs-content">
-		<section id="pad" class="is-active">
+		<section id="pad" class="{{ app.request.get('tab') == 'pad' or app.request.get('tab') is null ? 'is-active'}}">
 			<iframe name="embed_readwrite" src="{{ app.request.getSchemeAndHttpHost() }}:9001/p/{{ group.etherpadPadId}}" width="100%" height="700" frameborder="0"></iframe>
 
 		</section>
-		<section id="info">
+		<section class="{{ app.request.get('tab') == 'info' ? 'is-active'}}" id="info">
 			<h1>{{ event.title }}
 				-
 				{{ event.startDate | date("d/m/Y", "Europe/Paris")}}</h1>
@@ -49,10 +48,19 @@
 
 		</section>
 
-		<section id="librairy">
+		<section class="{{ app.request.get('tab') == 'library' ? 'is-active'}}" id="library">
 			<h1 class="is-size-2 is-primary">Bibliothèque</h1>
+
+			{% for source in event.sources  %}
+				{{ source.title }}
+				<br>
+			{% endfor %}
+
+			<button data-target="modalAddSource" onclick="toggleTarget()" class="button is-primary is-outlined">Ajouter une source</button>
 		</section>
 	</div>
+
+	{% include "modals/add-source.html.twig" %}
 
 
 {% endblock %}
