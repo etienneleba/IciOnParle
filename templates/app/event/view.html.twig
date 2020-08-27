@@ -10,11 +10,6 @@
 		{{ event.startDate | date("d/m/Y", "Europe/Paris")}}</h1>
 
 	<p>{{ event.description}}</p>
-	{% if not registered %}
-		<a href="{{ path('app_event_register', {id: event.id})}}">S'inscrire</a>
-	{% else %}
-		<a href="{{ path('app_event_unregister', {id: event.id})}}">Se désinscrire</a>
-	{% endif %}
 
 
 	<br><br>
@@ -30,7 +25,7 @@
 			<div>{{ user.email}}</div>
 		{% endfor %}
 	{% endif %}
-
 	<iframe name="embed_readwrite" src="http://localhost:9001/p/{{ group.etherpadPadId}}" width="100%" height="700" frameborder="0"></iframe>
+
 
 {% endblock %}

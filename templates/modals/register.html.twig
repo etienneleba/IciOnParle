@@ -1,0 +1,25 @@
+{% extends "modals/base.html.twig" %}
+
+{% set modalID = "modalRegister" %}
+{% set active = register %}
+
+{% block content %}
+	{% if registrationForm is not defined %}
+		{% set registrationForm = formGenerator.registrationForm %}
+	{% endif %}
+
+
+	{{ form_start(registrationForm) }}
+	{{ form_errors(registrationForm)}}
+	{{ form_row(registrationForm.firstname) }}
+	{{ form_row(registrationForm.lastname) }}
+	{{ form_row(registrationForm.email) }}
+	{{ form_row(registrationForm.plainPassword, {
+					label: 'Password'
+				}) }}
+	{{ form_row(registrationForm.agreeTerms) }}
+
+	<button type="submit" class="btn">Register</button>
+	{{ form_end(registrationForm) }}
+
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ parent()}}Evenements
+{% endblock %}
+
+{% block body %}
+	<br><br>
+	{% for event in events %}
+		<div>
+			<h4>{{ event.title}}
+				-
+				{{ event.startDate | date("d/m/Y", "Europe/Paris")}}
+				-
+				{{ event.userEvents | length}}
+				/
+				{{ event.nbMaxUser}}</h4>
+			<p>{{ event.description}}</p>
+		</div>
+		=========================================================
+		<br><br>
+	{% endfor %}
+
+{% endblock %}

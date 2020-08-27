@@ -1,0 +1,18 @@
+{% extends "modals/base.html.twig" %}
+
+{% set modalID="modalProfile" %}
+{% set active = profile%}
+
+{% block content %}
+	{% if profileForm is not defined %}
+		{% set profileForm = formGenerator.profileForm %}
+	{% endif %}
+
+
+	{{ form_start(profileForm)}}
+	{{ form_errors(profileForm)}}
+	<button type="submit">Valider</button>
+	{{ form_end(profileForm)}}
+
+
+{% endblock %}

@@ -1,0 +1,26 @@
+@import "./bulma.scss";
+
+html {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  background-color: #f6f6f6;
+  min-height: 100vh;
+  padding: 0;
+  margin: 0;
+}
+
+nav {
+  background-color: transparent !important;
+  .navbar-item {
+    .nav-link {
+      color: $dark;
+      font-size: 0.85em;
+    }
+    .nav-link:hover {
+      color: $primary !important;
+    }
+  }
+}

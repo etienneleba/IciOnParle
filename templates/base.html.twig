@@ -2,6 +2,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>
 			{% block title %}IciOnParle |
 			{% endblock %}
@@ -11,11 +12,108 @@
 		{% endblock %}
 	</head>
 	<body>
-		<a href="{{ path('app_dashboard')}}">Dashboard</a>
-		<a href="{{ path('app_user_profile')}}">Profile</a>
-		{% block body %}{% endblock %}
-		{% block javascripts %}
-			{{ encore_entry_script_tags('app') }}
-		{% endblock %}
-	</body>
-</html>
+		<div class="container">
+			<nav class="navbar is-transparent" role="navigation" aria-label="main navigation">
+				<div class="navbar-brand">
+					<a class="navbar-item" href="{{ path('index')}}">
+						IciOnParle
+					</a>
+
+					<a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" onclick="toggleMenu()">
+						<span aria-hidden="true"></span>
+						<span aria-hidden="true"></span>
+						<span aria-hidden="true"></span>
+					</a>
+				</div>
+
+				<div id="navbar" class="navbar-menu">
+
+
+					<div class="navbar-end">
+
+						{% if not app.user %}
+							<div class="navbar-item">
+								<a href="#" class="nav-link">A propos</a>
+							</div>
+							<div class="navbar-item">
+								<a href="{{ path('event_viewAll')}}" class="nav-link">Evénements</a>
+							</div>
+							<div class="navbar-item">
+								<a class="button is-primary is-outlined is-small has-text-weight-bold" data-target="modalLogin" onclick="toggleTarget()">
+									Connexion
+								</a>
+							</div>
+							<div class="navbar-item">
+								<a class="button is-primary is-small has-text-weight-bold" data-target="modalRegister" onclick="toggleTarget()">
+									S'inscrire
+								</a>
+							</div>
+
+						{% else %}
+							<div class=" navbar-item">
+								<a href="{{ path('app_dashboard')}}" class="nav-link">Evénements</a>
+							</div>
+							<div class=" navbar-item">
+								<a href="#" class="has-text-black nav-link" data-target="modalProfile" onclick="toggleTarget()">Profile</a>
+							</div>
+							<div class="navbar-item">
+								<a href="{{ path('app_logout')}}" class="nav-link">Se déconnecter</a>
+							</div>
+
+						{% endif %}
+
+
+					</div>
+				</div>
+			</nav>
+
+
+			{% for type, messages in app.session.flashBag.all %}
+				{% for message in messages %}
+					{% if type == 'error'%}
+						{% set type = 'danger' %}
+					{% endif %}
+					<div class="notification is-{{ type }} is-light">
+						<button onclick="closeNotification()" class="delete"></button>
+						{{ message | raw }}
+					</div>
+				{% endfor %}
+			{% endfor %}
+
+
+			{% set register = false %}
+			{% if app.request.get('register') is not null %}
+				{% set register = true %}
+
+			{% endif %}
+			{% set login = false %}
+			{% if app.request.get('login') is not null %}
+				{% set login = true %}
+
+			{% endif %}
+			{% set profile = false %}
+			{% if app.request.get('profile') is not null %}
+				{% set profile = true %}
+
+			{% endif %}
+
+
+			<div class="section"> {% block body %}{% endblock %}
+				</div>
+				{% if not app.user %}
+
+					{% include "modals/login.html.twig"%}
+
+					{% include "modals/register.html.twig"%}
+				{% else %}
+					{% include "modals/profile.html.twig" %}
+
+				{% endif %}
+
+
+				{% block javascripts %}
+					{{ encore_entry_script_tags('app') }}
+				{% endblock %}
+			</body>
+		</body>
+	</html>

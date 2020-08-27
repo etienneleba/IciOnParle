@@ -5,42 +5,51 @@
 {% endblock %}
 
 {% block body %}
-	<h1>Dashbaord</h1>
-	<a href="{{ path('app_logout')}}">logout</a>
 
-	<h1>Evénements inscrits</h1>
+	{% if userEvents | length > 0 %}
+		<h2 class="is-size-4 is-primary mb-3">Je participe</h2>
 
-	{% for event in userEvents %}
-		<div>
-			<h4>{{ event.title}}
-				-
-				{{ event.startDate | date("d/m/Y", "Europe/Paris")}}
-				-
-				{{ event.userEvents | length}}
-				/
-				{{ event.nbMaxUser}}</h4>
-			<p>{{ event.description}}</p>
-		</div>
-		<a href="{{ path('app_event_view', {id: event.id})}}">Voir</a><br>
-		=========================================================
-		<br><br>
-	{% endfor %}
+		{% for event in userEvents %}
+			<div>
+				<h4>{{ event.title}}
+					-
+					{{ event.startDate | date("d/m/Y", "Europe/Paris")}}
+					-
+					{{ event.userEvents | length}}
+					/
+					{{ event.nbMaxUser}}</h4>
+				<p>{{ event.description}}</p>
+			</div>
+			{% if event.started %}
+				<a href="{{ path('app_event_view', {id: event.id})}}">Voir</a>
+			{% else %}
+				<a href="{{ path('app_event_unregister', {id: event.id})}}">Se désinscrire</a>
+			{% endif %}
 
-	<h1>Evénements</h1>
+			<br>
+			=========================================================
+			<br><br>
+		{% endfor %}
+	{% endif %}
+	{% if events | length > 0 %}
+		<h2 class="is-size-4 is-primary mb-3">Les événements IciOnParle</h2>
 
-	{% for event in events %}
-		<div>
-			<h4>{{ event.title}}
-				-
-				{{ event.startDate | date("d/m/Y", "Europe/Paris")}}
-				-
-				{{ event.userEvents | length}}
-				/
-				{{ event.nbMaxUser}}</h4>
-			<p>{{ event.description}}</p>
-		</div>
-		<a href="{{ path('app_event_view', {id: event.id})}}">Voir</a><br>
-		=========================================================
-		<br><br>
-	{% endfor %}
+		{% for event in events %}
+			<div>
+				<h4>{{ event.title}}
+					-
+					{{ event.startDate | date("d/m/Y", "Europe/Paris")}}
+					-
+					{{ event.userEvents | length}}
+					/
+					{{ event.nbMaxUser}}</h4>
+				<p>{{ event.description}}</p>
+			</div>
+			<a href="{{ path('app_event_register', {id: event.id})}}">S'inscrire</a><br>
+			=========================================================
+			<br><br>
+		{% endfor %}
+	{% endif %}
+
+
 {% endblock %}

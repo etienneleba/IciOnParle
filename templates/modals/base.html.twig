@@ -1,0 +1,6 @@
+<div id="{{ modalID }}" class="modal {{ active ? 'is-active'}}">
+	<div data-target="{{ modalID }}" onclick="toggleTarget()" class="modal-background"></div>
+	<div class="modal-content has-background-white"> {% block content %}{% endblock %}
+		</div>
+		<button data-target="{{ modalID }}" onclick="toggleTarget()" class="modal-close is-large" aria-label="close"></button>
+	</div>

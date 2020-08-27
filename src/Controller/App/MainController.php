@@ -19,7 +19,9 @@ class MainController extends AbstractController
     {
         $userEvents = $em->getRepository(Event::class)->findAllWithUser($this->getUser());
 
-        $events = $em->getRepository(Event::class)->findAllWithoutUser($this->getUser());
+        $events = $em->getRepository(Event::class)->findBy(['started' => false]);
+
+        $events = array_diff($events, $userEvents);
 
         return $this->render('app/main/dashboard.html.twig', [
             'userEvents' => $userEvents,

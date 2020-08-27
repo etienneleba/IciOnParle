@@ -32,19 +32,6 @@ class EventRepository extends ServiceEntityRepository
         ;
     }
 
-    public function findAllWithoutUser(User $user)
-    {
-        return $this->createQueryBuilder('e')
-            ->andWhere('ue.user != :id')
-            ->orWhere('ue.user is NULL')
-            ->leftJoin('e.userEvents', 'ue')
-            ->setParameter('id', $user->getId())
-            ->orderBy('e.startDate', 'ASC')
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-
     // /**
     //  * @return Event[] Returns an array of Event objects
     //  */

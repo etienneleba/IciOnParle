@@ -30,8 +30,15 @@ class EventController extends AbstractController
      */
     public function view(Event $event, EntityManagerInterface $em)
     {
+        if (false == $event->getStarted()) {
+            return $this->redirectToRoute('app_dashboard');
+        }
         /** @var Group $group */
         $group = $em->getRepository(Group::class)->findOneByUserEventStep($this->getUser(), $event, $event->getCurrentStep());
+
+        if (null == $group) {
+            return $this->redirectToRoute('app_event_finished', ['id' => $event->getId()]);
+        }
 
         $validUntil = strtotime('+1 day');
 
@@ -76,7 +83,7 @@ class EventController extends AbstractController
             $this->addFlash('success', 'vous êtes inscrit à l\'événement : '.$event->getTitle());
         }
 
-        return $this->redirectToRoute('app_event_view', ['id' => $event->getId()]);
+        return $this->redirectToRoute('app_dashboard');
     }
 
     /**
@@ -94,6 +101,16 @@ class EventController extends AbstractController
 
         $this->addFlash('success', 'vous êtes désinscrit de l\'événement : '.$event->getTitle());
 
-        return $this->redirectToRoute('app_event_view', ['id' => $event->getId()]);
+        return $this->redirectToRoute('app_dashboard');
+    }
+
+    /**
+     * @Route("/finished/{id}", name="finished")
+     */
+    public function finished(Event $event)
+    {
+        return $this->render('app/event/finished.html.twig', [
+            'event' => $event,
+        ]);
     }
 }

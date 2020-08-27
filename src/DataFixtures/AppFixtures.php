@@ -52,7 +52,7 @@ class AppFixtures extends Fixture
             ->setNbDaysStep(7)
             ->setNbDaysLastStep(15)
             ->setNbMaxUser(1000000)
-            ->setNbMinUsersPerGroup(3)
+            ->setNbMinUsersPerGroup(2)
             ->setNbMinUsersFinalGroup(5)
             ->setCreatedAt(new DateTime())
         ;

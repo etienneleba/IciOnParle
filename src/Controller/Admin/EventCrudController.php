@@ -115,18 +115,18 @@ class EventCrudController extends AbstractCrudController
 
         $currentStep = $event->getCurrentStep();
 
-        /** @var Group $group */
-        foreach ($currentStep->getGroups() as $group) {
-            $group->setFinalText($this->etherpadClient->getHTML($group->getEtherpadPadId()));
-            $this->etherpadClient->deleteGroup($group->getEtherpadGroupId());
-        }
-
         $newStep = $event->nextStep($currentStep);
 
         /** @var Group $group */
         foreach ($newStep->getGroups() as $group) {
             $group->setEtherpadGroupId($this->etherpadClient->createGroup());
             $group->setEtherpadPadId($this->etherpadClient->createGroupPad($group->getEtherpadGroupId()));
+        }
+
+        /** @var Group $group */
+        foreach ($currentStep->getGroups() as $group) {
+            $group->setFinalText($this->etherpadClient->getHTML($group->getEtherpadPadId()));
+            $this->etherpadClient->deleteGroup($group->getEtherpadGroupId());
         }
 
         $event->addStep($newStep);

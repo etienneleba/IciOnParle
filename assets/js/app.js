@@ -6,9 +6,22 @@
  */
 
 // any CSS you import will output into a single css file (app.css in this case)
-import '../css/app.css';
 
-// Need jQuery? Install it with "yarn add jquery", then uncomment to import it.
-// import $ from 'jquery';
+import "../css/app.scss";
 
-console.log('Hello Webpack Encore! Edit me in assets/js/app.js');
+// open and close the menu
+window.toggleMenu = function toggleMenu() {
+  document.getElementById("navbar").classList.toggle("is-active");
+  event.srcElement.classList.toggle("is-active");
+};
+
+window.closeNotification = function closeNotification() {
+  let notification = event.srcElement.parentNode;
+  notification.parentNode.removeChild(notification);
+};
+
+window.toggleTarget = function toggleTarget() {
+  let target = event.srcElement.dataset.target;
+  let targetElement = document.getElementById(target);
+  targetElement.classList.toggle("is-active");
+};
