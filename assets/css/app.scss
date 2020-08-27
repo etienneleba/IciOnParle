@@ -24,3 +24,13 @@ nav {
     }
   }
 }
+
+.tabs-content {
+  section {
+    display: none;
+  }
+
+  section.is-active {
+    display: block;
+  }
+}
