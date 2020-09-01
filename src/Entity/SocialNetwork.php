@@ -18,11 +18,6 @@ class SocialNetwork
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $link;
-
-    /**
      * @ORM\ManyToOne(targetEntity=SocialNetworkType::class)
      * @ORM\JoinColumn(nullable=false)
      */
@@ -41,18 +36,6 @@ class SocialNetwork
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getLink(): ?string
-    {
-        return $this->link;
-    }
-
-    public function setLink(string $link): self
-    {
-        $this->link = $link;
-
-        return $this;
     }
 
     public function getSocialNetworkType(): ?SocialNetworkType

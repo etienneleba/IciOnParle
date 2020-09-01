@@ -142,7 +142,33 @@ class Event
             }
         }
 
-        return $step;
+        return $returnStep;
+    }
+
+    public function getPreviousStep(): ?Step
+    {
+        if (0 == count($this->getSteps())) {
+            return null;
+        }
+
+        $rank = null;
+
+        /** @var Step $step */
+        foreach ($this->getSteps() as $step) {
+            if (null == $rank) {
+                $rank = $step->getRank();
+            } elseif ($step->getRank() > $rank) {
+                $rank = $step->getRank();
+            }
+        }
+
+        foreach ($this->getSteps() as $step) {
+            if ($step->getRank() == $rank - 1) {
+                return $step;
+            }
+        }
+
+        return null;
     }
 
     public function isFinalStep()

@@ -66,7 +66,7 @@ class User implements UserInterface
     private $userEvents;
 
     /**
-     * @ORM\OneToMany(targetEntity=SocialNetwork::class, mappedBy="user")
+     * @ORM\OneToMany(targetEntity=SocialNetwork::class, mappedBy="user", cascade={"persist", "remove"})
      */
     private $socialNetworks;
 
@@ -86,6 +86,21 @@ class User implements UserInterface
     public function __toString()
     {
         return $this->firstname.' '.$this->lastname;
+    }
+
+    public function getFinalTextFromStep(?Step $step)
+    {
+        if (null == $step) {
+            return null;
+        }
+        /** @var Group $group */
+        foreach ($this->getGroups() as $group) {
+            if ($group->getStep() == $step) {
+                return $group->getFinalText();
+            }
+        }
+
+        return null;
     }
 
     public function getId(): ?int

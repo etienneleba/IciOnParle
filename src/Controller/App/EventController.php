@@ -37,7 +37,7 @@ class EventController extends AbstractController
             return $this->redirectToRoute('app_dashboard');
         }
         /** @var Group $group */
-        $group = $em->getRepository(Group::class)->findOneByUserEventStep($this->getUser(), $event, $event->getCurrentStep());
+        $group = $em->getRepository(Group::class)->findOneByUserStep($this->getUser(), $event->getCurrentStep());
 
         if (null == $group) {
             return $this->redirectToRoute('app_event_finished', ['id' => $event->getId()]);

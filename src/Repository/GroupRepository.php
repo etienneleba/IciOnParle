@@ -2,7 +2,6 @@
 
 namespace App\Repository;
 
-use App\Entity\Event;
 use App\Entity\Group;
 use App\Entity\Step;
 use App\Entity\User;
@@ -22,18 +21,15 @@ class GroupRepository extends ServiceEntityRepository
         parent::__construct($registry, Group::class);
     }
 
-    public function findOneByUserEventStep(User $user, Event $event, Step $step)
+    public function findOneByUserStep(User $user, Step $step)
     {
         return $this->createQueryBuilder('g')
             ->andWhere('u.id = :userId')
-            ->andWhere('e.id = :eventId')
             ->andWhere('s.id = :stepId')
             ->setParameter('userId', $user->getId())
-            ->setParameter('eventId', $event->getId())
             ->setParameter('stepId', $step->getId())
             ->leftJoin('g.step', 's')
             ->leftJoin('g.users', 'u')
-            ->leftJoin('s.event', 'e')
             ->orderBy('g.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery()

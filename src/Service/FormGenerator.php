@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Entity\SocialNetwork;
 use App\Entity\Source;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
@@ -42,7 +43,12 @@ class FormGenerator
 
     public function profileForm()
     {
+        /** @var User */
         $user = $this->tokenStorage->getToken()->getUser();
+
+        $socialNetwork = new SocialNetwork();
+
+        $user->addSocialNetwork($socialNetwork);
 
         $form = $this->formFactory->create(UserType::class, $user, [
             'action' => $this->urlGenerator->generate('app_user_edit'),

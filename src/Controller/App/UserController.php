@@ -38,9 +38,9 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $referer = $request->headers->get('referer');
-
             $em->flush();
+
+            $referer = $request->headers->get('referer');
 
             return new RedirectResponse($referer);
         }

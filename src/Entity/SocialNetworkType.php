@@ -23,19 +23,9 @@ class SocialNetworkType
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $icon;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $host;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $placeholder;
 
     public function getId(): ?int
     {
@@ -62,30 +52,6 @@ class SocialNetworkType
     public function setIcon(string $icon): self
     {
         $this->icon = $icon;
-
-        return $this;
-    }
-
-    public function getHost(): ?string
-    {
-        return $this->host;
-    }
-
-    public function setHost(string $host): self
-    {
-        $this->host = $host;
-
-        return $this;
-    }
-
-    public function getPlaceholder(): ?string
-    {
-        return $this->placeholder;
-    }
-
-    public function setPlaceholder(string $placeholder): self
-    {
-        $this->placeholder = $placeholder;
 
         return $this;
     }

@@ -60,6 +60,8 @@
 				{{ user.firstname }}
 				{{ user.lastname }}
 				{{ user.email}}
+
+				<div class="has-background-white">{{ user.getFinalTextFromStep(event.getPreviousStep) | raw}}</div>
 			</section>
 		{% endfor %}
 	</div>
