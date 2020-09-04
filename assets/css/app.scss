@@ -1,5 +1,36 @@
 @import "./bulma.scss";
 
+@font-face {
+  font-family: "Nunito";
+  src: url("../fonts/Nunito/Nunito-ExtraLight.ttf");
+  font-weight: 200;
+}
+@font-face {
+  font-family: "Nunito";
+  src: url("../fonts/Nunito/Nunito-Light.ttf");
+  font-weight: 300;
+}
+@font-face {
+  font-family: "Nunito";
+  src: url("../fonts/Nunito/Nunito-Regular.ttf");
+  font-weight: normal;
+}
+@font-face {
+  font-family: "Nunito";
+  src: url("../fonts/Nunito/Nunito-SemiBold.ttf");
+  font-weight: 600;
+}
+@font-face {
+  font-family: "Nunito";
+  src: url("../fonts/Nunito/Nunito-Bold.ttf");
+  font-weight: 700;
+}
+@font-face {
+  font-family: "Nunito";
+  src: url("../fonts/Nunito/Nunito-ExtraBold.ttf");
+  font-weight: 900;
+}
+
 html {
   padding: 0;
   margin: 0;
@@ -11,6 +42,9 @@ body {
   padding: 0;
   margin: 0;
   position: relative;
+  font-family: "Nunito", BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto",
+    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    "Helvetica", "Arial", sans-serif;
 }
 
 nav {
@@ -23,6 +57,19 @@ nav {
     .nav-link:hover {
       color: $primary !important;
     }
+  }
+
+  .logo-icon {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+  }
+
+  .logo-text {
+    font-family: "Nunito";
+    font-weight: 700;
+    color: $primary;
+    font-size: 18px;
   }
 }
 
@@ -43,6 +90,11 @@ nav {
   width: 100vw;
   left: 0;
   right: 0;
+}
+
+footer {
+  min-height: 200px;
+  background-color: $primary-dark;
 }
 
 @media screen and (min-width: 600px) {

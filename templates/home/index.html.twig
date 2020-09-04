@@ -3,6 +3,87 @@
 {% block title %}IciOnParle
 {% endblock %}
 
+{% block stylesheets %}
+	{{ encore_entry_link_tags('home-index-css') }}
+{% endblock %}
+
 {% block body %}
-	<h1>Homepage</h1>
+	<div class="container hero-container">
+		<div class="columns is-vcentered ">
+			<div class="column">
+				<div class="hero-text">
+					<h1 class="is-size-1 has-text-primary has-text-weight-bold mb-2">La délibération citoyenne à grande échelle</h1>
+					<div class="">Collaborer autour d’une question, d’une problématique, d’un projet à 100, 1000 ou 10 000 c’est maintenant possible</div>
+				</div>
+				<a href="{{ path('event_viewAll')}}" class="button is-primary">Voir les événements</a>
+
+			</div>
+			<div class="column has-text-centered">
+				<img src="{{ asset('build/images/crowd.png')}}" alt="Illustration d'une foule">
+			</div>
+		</div>
+
+
+	</div>
+
+
+	<div class="part2 container">
+		<h2 class="is-size-3 has-text-primary has-text-weight-bold mb-3">Ici<span class="has-text-secondary">On</span>Parle, qu’est-ce que c’est ?</h2>
+		<div class="columns">
+			<div class="column is-half">
+				<div class="is-size-5">C’est un outil qui permet de prendre des décisions, rédiger un rapport ou bien proposer des actions, tout en prenant en compte l’avis de tout le monde.</div>
+			</div>
+		</div>
+		<img src="{{ asset('build/images/people.png')}}" alt="illustration de personne de tout âge">
+
+	</div>
+
+
+	<div class="part3 pb-5 pb-4">
+		<div class="container pt-5 pb-5">
+			<h2 class="is-size-3 has-text-white has-text-weight-bold mb-5 mt-5">
+				Les 3 pilliers d’Ici<span class="has-text-secondary">On</span>Parle
+			</h2>
+
+			<div class="columns has-text-white mt-3 mb-5 pb-5">
+				<div class="column">
+					<div class="p">
+						<div class="stitle mb-2">Les groupes</div>
+						<div class="text">Les groupes permettre à chacun de partager ces idées avec les autres membres du groupe.
+						</div>
+					</div>
+
+				</div>
+				<div class="column">
+					<div class="p">
+						<div class="stitle mb-2">La représentativité</div>
+						<div class="text">Pour permettre une certaine éfficacité et rapidité, des participants sont tirés au sort pour représenter les idées de leur groupe.
+						</div>
+					</div>
+
+				</div>
+				<div class="column">
+					<div class="p">
+						<div class="stitle mb-2">Le tirage au sort</div>
+						<div class="text">Pour permettre l’égalité des chances dans la prise de décision. C’est le tirage au sort qui a été choisi pour sélectionner les représentants.
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+
+		</div>
+
+
+	</div>
+
+	<div class="part4 container">
+		<h2 class="is-size-3 has-text-weight-bold has-text-primary mt-3 mb-5">Ici<span class="has-text-secondary">On</span>Parle, comment ça marche ?</h2>
+		<div class="box43 mt-5">
+			<iframe src="https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Fproto%2FwIqxTmjXPcl8IBYOGuH2Uc%2FIciOnParle-Pr%25C3%25A9sentation%3Fnode-id%3D1%253A2%26scaling%3Dmin-zoom"></iframe>
+		</div>
+	</div>
+
+
 {% endblock %}

@@ -2,5 +2,10 @@
 
 $primary: #2b4c8c;
 $secondary: #fa9746;
+$primary-dark: #2e3552;
+
+.has-text-secondary {
+  color: $secondary;
+}
 
 @import "~bulma/bulma";

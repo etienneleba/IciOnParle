@@ -3,12 +3,13 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="icon" href="{{ asset('build/images/logo.svg') }}"/>
 		<title>
 			{% block title %}IciOnParle |
 			{% endblock %}
 		</title>
 		{% block stylesheets %}
-			{{ encore_entry_link_tags('app') }}
+			{{ encore_entry_link_tags('app-css') }}
 		{% endblock %}
 	</head>
 	<body>
@@ -16,7 +17,8 @@
 			<nav class="navbar is-transparent" role="navigation" aria-label="main navigation">
 				<div class="navbar-brand">
 					<a class="navbar-item" href="{{ path('index')}}">
-						IciOnParle
+						<img class="logo-icon" src="{{ asset('build/images/logo.svg') }}" alt="">
+						<span class="logo-text">Ici<span class="has-text-secondary">On</span>Parle</span>
 					</a>
 
 					<a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" onclick="toggleMenu()">
@@ -66,54 +68,55 @@
 					</div>
 				</div>
 			</nav>
+		</div>
 
-
-			{% for type, messages in app.session.flashBag.all %}
-				{% for message in messages %}
-					{% if type == 'error'%}
-						{% set type = 'danger' %}
-					{% endif %}
-					<div class="notification is-{{ type }} is-light">
-						<button onclick="closeNotification()" class="delete"></button>
-						{{ message | raw }}
-					</div>
-				{% endfor %}
-			{% endfor %}
-
-
-			{% set register = false %}
-			{% if app.request.get('register') is not null %}
-				{% set register = true %}
-
-			{% endif %}
-			{% set login = false %}
-			{% if app.request.get('login') is not null %}
-				{% set login = true %}
-
-			{% endif %}
-			{% set profile = false %}
-			{% if app.request.get('profile') is not null %}
-				{% set profile = true %}
-
-			{% endif %}
-
-
-			<div class="section"> {% block body %}{% endblock %}
-				</div>
-				{% if not app.user %}
-
-					{% include "modals/login.html.twig"%}
-
-					{% include "modals/register.html.twig"%}
-				{% else %}
-					{% include "modals/profile.html.twig" %}
-
+		{% for type, messages in app.session.flashBag.all %}
+			{% for message in messages %}
+				{% if type == 'error'%}
+					{% set type = 'danger' %}
 				{% endif %}
+				<div class="notification is-{{ type }} is-light">
+					<button onclick="closeNotification()" class="delete"></button>
+					{{ message | raw }}
+				</div>
+			{% endfor %}
+		{% endfor %}
 
 
-				{% block javascripts %}
-					{{ encore_entry_script_tags('app') }}
-				{% endblock %}
-			</body>
-		</body>
-	</html>
+		{% set register = false %}
+		{% if app.request.get('register') is not null %}
+			{% set register = true %}
+
+		{% endif %}
+		{% set login = false %}
+		{% if app.request.get('login') is not null %}
+			{% set login = true %}
+
+		{% endif %}
+		{% set profile = false %}
+		{% if app.request.get('profile') is not null %}
+			{% set profile = true %}
+
+		{% endif %}
+
+
+		{% block body %}{% endblock %}
+
+		<footer></footer>
+
+		{% if not app.user %}
+
+			{% include "modals/login.html.twig"%}
+
+			{% include "modals/register.html.twig"%}
+		{% else %}
+			{% include "modals/profile.html.twig" %}
+
+		{% endif %}
+
+
+		{% block javascripts %}
+			{{ encore_entry_script_tags('app-js') }}
+		{% endblock %}
+	</body>
+</html>

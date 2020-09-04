@@ -7,8 +7,6 @@
 
 // any CSS you import will output into a single css file (app.css in this case)
 
-import "../css/app.scss";
-
 // open and close the menu
 window.toggleMenu = function toggleMenu() {
   document.getElementById("navbar").classList.toggle("is-active");
