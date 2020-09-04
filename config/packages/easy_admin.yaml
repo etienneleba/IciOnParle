@@ -2,6 +2,7 @@ easy_admin:
   entities:
     # List the entity class name you want to manage
     - App\Entity\User
+    - App\Entity\Registered
     - App\Entity\Event
     - App\Entity\UserEvent
     - App\Entity\SocialNetwork

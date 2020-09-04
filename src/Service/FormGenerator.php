@@ -2,9 +2,11 @@
 
 namespace App\Service;
 
+use App\Entity\Registered;
 use App\Entity\SocialNetwork;
 use App\Entity\Source;
 use App\Entity\User;
+use App\Form\RegisteredType;
 use App\Form\RegistrationFormType;
 use App\Form\SourceType;
 use App\Form\UserType;
@@ -63,6 +65,17 @@ class FormGenerator
 
         $form = $this->formFactory->create(SourceType::class, $source, [
             'action' => $this->urlGenerator->generate('app_event_addSource', ['id' => $eventId]),
+        ]);
+
+        return $form->createView();
+    }
+
+    public function emailForm()
+    {
+        $registered = new Registered();
+
+        $form = $this->formFactory->create(RegisteredType::class, $registered, [
+            'action' => $this->urlGenerator->generate('register_email'),
         ]);
 
         return $form->createView();

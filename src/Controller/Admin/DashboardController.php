@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Event;
 use App\Entity\Group;
+use App\Entity\Registered;
 use App\Entity\SocialNetwork;
 use App\Entity\SocialNetworkType;
 use App\Entity\Step;
@@ -37,6 +38,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linktoRoute('IciOnParle', 'fa fa-comments', 'app_dashboard');
         yield MenuItem::linktoDashboard('Dashboard', 'fa fa-home');
         yield MenuItem::linkToCrud('User', 'fa fa-user', User::class);
+        yield MenuItem::linkToCrud('Registered', 'fa fa-user', Registered::class);
         yield MenuItem::linkToCrud('Event', 'fa fa-calendar-day', Event::class);
         yield MenuItem::linkToCrud('Step', 'fa fa-check', Step::class);
         yield MenuItem::linkToCrud('Group', 'fa fa-users', Group::class);

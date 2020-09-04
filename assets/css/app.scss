@@ -1,4 +1,6 @@
 @import "./bulma.scss";
+@import "./components.scss";
+@import "~@fortawesome/fontawesome-free/css/all.min.css";
 
 @font-face {
   font-family: "Nunito";
@@ -38,8 +40,9 @@ html {
 }
 
 body {
-  min-height: -webkit-fill-available;
+  min-height: 100vh;
   padding: 0;
+  padding-bottom: 250px;
   margin: 0;
   position: relative;
   font-family: "Nunito", BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto",
@@ -95,6 +98,9 @@ nav {
 footer {
   min-height: 200px;
   background-color: $primary-dark;
+  position: absolute;
+  width: 100%;
+  bottom: 0;
 }
 
 @media screen and (min-width: 600px) {
