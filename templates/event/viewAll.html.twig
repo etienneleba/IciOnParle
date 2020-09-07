@@ -12,41 +12,10 @@
 					<span class="underline-title">Les événements Ici<span class="has-text-secondary">On</span>Parle</span>
 				</h1>
 
-				<div class="columns mt-5 mb-5">
-					{% for event in events %}
-						<div class="column is-half is-one-third-fullhd">
-							<div class="event-card">
-								<div class="text">
-									<h4 class="is-size-5 has-text-weight-bold has-text-primary mb-3">
-										<span class="underline-title">{{ event.title}}</span>
-									</h4>
-									<p class="is-size-7">{{ event.description}}</p>
-								</div>
-								<div class="infos is-size-5 has-text-primary has-text-weight-bold">
-									<div class="info">
-										{{event.userEvents | length}}
-										<span class="has-text-secondary">/</span>
-										{{ event.nbMaxUser}}
-										<span class="has-text-secondary is-size-8">inscrits</span>
-									</div>
-									<div class="info">
-										<span class="has-text-secondary is-size-8">debut</span>
-										{{ event.startDate | date('d', 'Europe/Paris')}}<span class="has-text-secondary">
-											/</span>
-										{{ event.startDate | date('m', 'Europe/Paris')}}<span class="has-text-secondary">
-											/</span>
-										{{ event.startDate | date('y', 'Europe/Paris')}}
-									</div>
-								</div>
-								<div data-target="modalRegister" onclick="toggleTarget()" class="has-background-primary is-size-5 has-text-weight-bold has-text-centered has-text-white py-2 action">Participer</div>
-
-							</div>
-
-
-						</div>
-
-					{% endfor %}
-				</div>
+				{% include "_includes/loop_events.html.twig" with {
+					'events':events,
+					'target': true
+				}%}
 			</div>
 		</div>
 

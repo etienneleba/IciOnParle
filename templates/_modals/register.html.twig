@@ -1,4 +1,4 @@
-{% extends "modals/base.html.twig" %}
+{% extends "_modals/base.html.twig" %}
 
 {% set modalID = "modalRegister" %}
 {% set active = register %}
@@ -52,7 +52,7 @@
 				{{ form_widget(registrationForm.email, {
 				attr: {
 					class: "input",
-					placeholder: "Nom"
+					placeholder: "Email"
 				}
 			}) }}
 
@@ -67,7 +67,7 @@
 				{{ form_widget(registrationForm.plainPassword, {
 				attr: {
 					class: "input",
-					placeholder: "Nom"
+					placeholder: "Mot de passe"
 				}
 			}) }}
 

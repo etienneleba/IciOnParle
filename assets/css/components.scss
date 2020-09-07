@@ -69,6 +69,8 @@
 .event-card {
   background-color: white;
   border-radius: 5px;
+  box-shadow: 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1),
+    0 0 0 1px rgba(10, 10, 10, 0.02);
   .text {
     padding: 1.25em;
   }
@@ -98,6 +100,7 @@
 
   .action {
     border-radius: 0px 0px 6px 6px;
+    display: block;
     &:hover {
       color: $secondary;
       cursor: pointer;

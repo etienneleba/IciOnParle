@@ -6,50 +6,45 @@
 
 {% block body %}
 
-	{% if userEvents | length > 0 %}
-		<h2 class="is-size-4 is-primary mb-3">Je participe</h2>
+	<div class="container">
 
-		{% for event in userEvents %}
-			<div>
-				<h4>{{ event.title}}
-					-
-					{{ event.startDate | date("d/m/Y", "Europe/Paris")}}
-					-
-					{{ event.userEvents | length}}
-					/
-					{{ event.nbMaxUser}}</h4>
-				<p>{{ event.description}}</p>
+		<div class="columns is-centered mb-5 mt-5">
+			<div class="column is-four-fifths">
+				<h1 class="is-size-3 is-size-4-touch has-text-primary has-text-weight-bold mb-5">
+					<span class="underline-title">Je participe</span>
+				</h1>
+				{% if userEvents | length > 0 %}
+					{% include "_includes/loop_events.html.twig" with {
+						'events': userEvents,
+						'target': false,
+						'registered': true
+					} %}
+				{% else %}
+
+					<div class="has-text-centered">Vous ne participez à aucun événements</div>
+				{% endif %}
+
 			</div>
-			{% if event.started %}
-				<a href="{{ path('app_event_view', {id: event.id})}}">Voir</a>
-			{% else %}
-				<a href="{{ path('app_event_unregister', {id: event.id})}}">Se désinscrire</a>
-			{% endif %}
+		</div>
 
-			<br>
-			=========================================================
-			<br><br>
-		{% endfor %}
-	{% endif %}
-	{% if events | length > 0 %}
-		<h2 class="is-size-4 is-primary mb-3">Les événements IciOnParle</h2>
 
-		{% for event in events %}
-			<div>
-				<h4>{{ event.title}}
-					-
-					{{ event.startDate | date("d/m/Y", "Europe/Paris")}}
-					-
-					{{ event.userEvents | length}}
-					/
-					{{ event.nbMaxUser}}</h4>
-				<p>{{ event.description}}</p>
+		<div class="columns is-centered mb-5 mt-5">
+			<div class="column is-four-fifths">
+				<h1 class="is-size-3 is-size-4-touch has-text-primary has-text-weight-bold mb-5">
+					<span class="underline-title">Les événements Ici<span class="has-text-secondary">On</span>Parle</span>
+				</h1>
+				{% if events | length > 0 %}
+					{% include "_includes/loop_events.html.twig" with {
+						'events': events,
+						'target': false,
+						'registered':false
+					} %}
+				{% endif %}
 			</div>
-			<a href="{{ path('app_event_register', {id: event.id})}}">S'inscrire</a><br>
-			=========================================================
-			<br><br>
-		{% endfor %}
-	{% endif %}
+		</div>
+
+
+	</div>
 
 
 {% endblock %}

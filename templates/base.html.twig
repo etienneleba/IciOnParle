@@ -107,11 +107,11 @@
 
 		{% if not app.user %}
 
-			{% include "modals/login.html.twig"%}
+			{% include "_modals/login.html.twig"%}
 
-			{% include "modals/register.html.twig"%}
+			{% include "_modals/register.html.twig"%}
 		{% else %}
-			{% include "modals/profile.html.twig" %}
+			{% include "_modals/profile.html.twig" %}
 
 		{% endif %}
 
