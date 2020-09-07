@@ -4,19 +4,43 @@
 {% set active = login %}
 
 {% block content %}
-	<form method="post" action="{{ path('app_login')}}">
 
-		<h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-		<label for="inputEmail">Email</label>
-		<input type="email" name="email" id="inputEmail" class="form-control" required autofocus>
-		<label for="inputPassword">Password</label>
-		<input type="password" name="password" id="inputPassword" class="form-control" required>
 
-		<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+	<div class="mt-5 px-4">
+		<div class="mb-5">Renseigner vos identifiants pour vous connecter</div>
 
-		<button class="btn btn-lg btn-primary" type="submit">
-			Sign in
-		</button>
-	</form>
+		<form class="mt-5" method="post" action="{{ path('app_login')}}">
+
+			<div class="field mt-5">
+				<div class="control has-icons-left">
+					<input placeholder="Email" type="email" name="email" id="inputEmail" class="input " required autofocus>
+					<span class="icon is-small is-left">
+						<i class="fas fa-envelope"></i>
+					</span>
+				</div>
+
+			</div>
+
+			<div class="field mt-4 mb-5">
+				<div class="control has-icons-left">
+					<input placeholder="Mot de passe" type="password" name="password" id="inputPassword" class="input" required>
+					<span class="icon is-small is-left">
+						<i class="fas fa-lock"></i>
+					</span>
+				</div>
+
+			</div>
+
+
+			<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+			<div class="has-text-centered mt-5">
+				<button class="button is-primary px-5 mt-5" type="submit">
+					Connexion
+				</button>
+			</div>
+
+		</form>
+	</div>
+
 
 {% endblock %}

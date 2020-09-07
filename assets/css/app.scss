@@ -37,10 +37,13 @@ html {
   padding: 0;
   margin: 0;
   background-color: #f6f6f6;
+  max-width: calc(100vw - 10px);
+  min-height: calc(100vh + 210px);
+  position: relative;
 }
 
 body {
-  min-height: 100vh;
+  min-height: calc(100vh + 210px);
   padding: 0;
   padding-bottom: 250px;
   margin: 0;
@@ -48,6 +51,7 @@ body {
   font-family: "Nunito", BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto",
     "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     "Helvetica", "Arial", sans-serif;
+  max-width: calc(100vw - 10px);
 }
 
 nav {
@@ -109,5 +113,11 @@ footer {
     height: 70vh;
     top: 0;
     width: 100%;
+  }
+}
+
+@media screen and (min-width: 800px) {
+  body {
+    min-height: calc(100vh + 200px);
   }
 }

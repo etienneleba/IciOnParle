@@ -5,20 +5,86 @@
 {% endblock %}
 
 {% block body %}
-	<br><br>
-	{% for event in events %}
-		<div>
-			<h4>{{ event.title}}
-				-
-				{{ event.startDate | date("d/m/Y", "Europe/Paris")}}
-				-
-				{{ event.userEvents | length}}
-				/
-				{{ event.nbMaxUser}}</h4>
-			<p>{{ event.description}}</p>
-		</div>
-		=========================================================
-		<br><br>
-	{% endfor %}
+	<div class="container px-3">
+		<div class="columns is-centered mb-5 mt-5">
+			<div class="column is-four-fifths">
+				<h1 class="is-size-3 is-size-4-touch has-text-primary has-text-weight-bold mb-5">
+					<span class="underline-title">Les événements Ici<span class="has-text-secondary">On</span>Parle</span>
+				</h1>
 
+				<div class="columns mt-5 mb-5">
+					{% for event in events %}
+						<div class="column is-half is-one-third-fullhd">
+							<div class="event-card">
+								<div class="text">
+									<h4 class="is-size-5 has-text-weight-bold has-text-primary mb-3">
+										<span class="underline-title">{{ event.title}}</span>
+									</h4>
+									<p class="is-size-7">{{ event.description}}</p>
+								</div>
+								<div class="infos is-size-5 has-text-primary has-text-weight-bold">
+									<div class="info">
+										{{event.userEvents | length}}
+										<span class="has-text-secondary">/</span>
+										{{ event.nbMaxUser}}
+										<span class="has-text-secondary is-size-8">inscrits</span>
+									</div>
+									<div class="info">
+										<span class="has-text-secondary is-size-8">debut</span>
+										{{ event.startDate | date('d', 'Europe/Paris')}}<span class="has-text-secondary">
+											/</span>
+										{{ event.startDate | date('m', 'Europe/Paris')}}<span class="has-text-secondary">
+											/</span>
+										{{ event.startDate | date('y', 'Europe/Paris')}}
+									</div>
+								</div>
+								<div data-target="modalRegister" onclick="toggleTarget()" class="has-background-primary is-size-5 has-text-weight-bold has-text-centered has-text-white py-2 action">Participer</div>
+
+							</div>
+
+
+						</div>
+
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+
+		<div class="mb-5 mt-5 has-text-centered is-size-5 is-size-6-mobile">Entrez votre email pour être alerté des nouveaux événements !
+		</div>
+
+		<div class="columns is-centered mt-5">
+
+
+			<div class="column is-one-third">
+				<div class="email-register mt-5">
+					{{ form_start(registeredForm)}}
+					<span class="has-text-danger">{{ form_errors(registeredForm.email)}}</span>
+					<p class="control has-icons-left has-icons-right">
+
+						{{ form_widget(registeredForm.email,{
+							label: false,
+							attr: {
+								class: "input has-icons-left",
+								placeholder: "Entrez votre email"
+							}
+						})}}
+
+						<span class="icon is-small is-left">
+							<i class="fas fa-envelope"></i>
+						</span>
+						<button type="submit" class="button is-secondary has-text-white">
+							<i class="fas fa-paper-plane"></i>
+						</button>
+					</p>
+					{{form_end(registeredForm)}}
+
+				</div>
+			</div>
+
+
+		</div>
+
+
+	</div>
 {% endblock %}

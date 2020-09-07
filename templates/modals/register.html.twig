@@ -9,17 +9,81 @@
 	{% endif %}
 
 
-	{{ form_start(registrationForm) }}
-	{{ form_errors(registrationForm)}}
-	{{ form_row(registrationForm.firstname) }}
-	{{ form_row(registrationForm.lastname) }}
-	{{ form_row(registrationForm.email) }}
-	{{ form_row(registrationForm.plainPassword, {
-					label: 'Password'
-				}) }}
-	{{ form_row(registrationForm.agreeTerms) }}
+	<div class="px-4 mt-5">
 
-	<button type="submit" class="btn">Register</button>
-	{{ form_end(registrationForm) }}
+		<div class="mt-5 mb-5">
+			Renseigner vos identifiants pour vous inscrire à la plateforme IciOnParle et participer aux événements
+		</div>
+		{{ form_start(registrationForm) }}
+		{{ form_errors(registrationForm)}}
+
+		<div class="field mt-5">
+			<div class="control has-icons-left">
+				{{ form_widget(registrationForm.firstname, {
+				attr: {
+					class: "input",
+					placeholder: "Prénom"
+				}
+			}) }}
+
+				<span class="icon is-small is-left">
+					<i class="fas fa-user"></i>
+				</span>
+			</div>
+
+		</div>
+		<div class="field mt-4">
+			<div class="control has-icons-left">
+				{{ form_widget(registrationForm.lastname, {
+				attr: {
+					class: "input",
+					placeholder: "Nom"
+				}
+			}) }}
+
+				<span class="icon is-small is-left">
+					<i class="fas fa-user"></i>
+				</span>
+			</div>
+
+		</div>
+		<div class="field mt-4">
+			<div class="control has-icons-left">
+				{{ form_widget(registrationForm.email, {
+				attr: {
+					class: "input",
+					placeholder: "Nom"
+				}
+			}) }}
+
+				<span class="icon is-small is-left">
+					<i class="fas fa-envelope"></i>
+				</span>
+			</div>
+
+		</div>
+		<div class="field mt-4">
+			<div class="control has-icons-left">
+				{{ form_widget(registrationForm.plainPassword, {
+				attr: {
+					class: "input",
+					placeholder: "Nom"
+				}
+			}) }}
+
+				<span class="icon is-small is-left">
+					<i class="fas fa-lock"></i>
+				</span>
+			</div>
+
+		</div>
+
+
+		<div class="has-text-centered mt-5">
+			<button type="submit" class="button is-primary is-outlined mt-5 px-5" class="btn">S'inscrire</button>
+		</div>
+
+		{{ form_end(registrationForm) }}</div>
+
 
 {% endblock %}

@@ -1,6 +1,19 @@
 <div id="{{ modalID }}" class="modal {{ active ? 'is-active'}}">
 	<div data-target="{{ modalID }}" onclick="toggleTarget()" class="modal-background"></div>
-	<div class="modal-content has-background-white"> {% block content %}{% endblock %}
+	<div class="modal-content has-background-white">
+		<div class="has-text-centered mt-3">
+			<a class="logo" href="{{ path('index')}}">
+
+				<img class="logo-icon" src="{{ asset('build/images/logo.svg') }}" alt="">
+
+
+				<span class="logo-text">Ici<span class="has-text-secondary">On</span>Parle</span>
+
+
+			</a>
 		</div>
-		<button data-target="{{ modalID }}" onclick="toggleTarget()" class="modal-close is-large" aria-label="close"></button>
+
+		{% block content %}{% endblock %}
 	</div>
+	<button data-target="{{ modalID }}" onclick="toggleTarget()" class="modal-close is-large" aria-label="close"></button>
+</div>
