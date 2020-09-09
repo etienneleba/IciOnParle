@@ -9,7 +9,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
 use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
 use Symfony\Component\Security\Core\Security;
@@ -72,7 +71,7 @@ class AppAuthenticator extends AbstractFormLoginAuthenticator implements Passwor
 
         if (!$user) {
             // fail authentication with a custom error
-            throw new CustomUserMessageAuthenticationException('Email could not be found.');
+            throw new CustomUserMessageAuthenticationException('Votre email n\'a pas été trouvé.');
         }
 
         return $user;
@@ -100,21 +99,6 @@ class AppAuthenticator extends AbstractFormLoginAuthenticator implements Passwor
         }
 
         return new RedirectResponse($this->urlGenerator->generate('app_dashboard'));
-    }
-
-    public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
-    {
-        $referer = $request->headers->get('referer');
-        if ($request->hasSession()) {
-            $request->getSession()->setFlash('error', $exception->getMessage());
-        }
-
-        return new RedirectResponse($referer);
-    }
-
-    public function start(Request $request, AuthenticationException $authException = null)
-    {
-        return new RedirectResponse($this->urlGenerator->generate('index', ['login' => true]));
     }
 
     protected function getLoginUrl()

@@ -9,11 +9,17 @@
 	<div class="mt-5 px-4">
 		<div class="mb-5">Renseigner vos identifiants pour vous connecter</div>
 
-		<form class="mt-5" method="post" action="{{ path('app_login')}}">
 
-			<div class="field mt-5">
+		<form class="mt-5" method="post" action="{{ path('app_login')}}">
+			{% if error %}
+				<div class="has-text-danger">
+					{{ error.messageKey|trans(error.messageData, 'security') }}
+				</div>
+			{% endif %}
+
+			<div class="field mt-3">
 				<div class="control has-icons-left">
-					<input placeholder="Email" type="email" name="email" id="inputEmail" class="input " required autofocus>
+					<input value="{{lastUsername}}" placeholder="Email" type="email" name="email" id="inputEmail" class="input " required autofocus>
 					<span class="icon is-small is-left">
 						<i class="fas fa-envelope"></i>
 					</span>

@@ -91,20 +91,20 @@
 			{% set login = true %}
 
 		{% endif %}
-		{% set profile = false %}
-		{% if app.request.get('profile') is not null %}
-			{% set profile = true %}
-
-		{% endif %}
 
 
 		{% block body %}{% endblock %}
 
 		<footer></footer>
 
+
 		{% if not app.user %}
 
-			{% include "_modals/login.html.twig"%}
+			{% include "_modals/login.html.twig" with {
+				'error' : error,
+				'lastUsername': lastUsername
+			
+			}%}
 
 			{% include "_modals/register.html.twig"%}
 			{% else %}
