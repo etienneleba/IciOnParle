@@ -66,11 +66,6 @@ class User implements UserInterface
     private $userEvents;
 
     /**
-     * @ORM\OneToMany(targetEntity=SocialNetwork::class, mappedBy="user", cascade={"persist", "remove"})
-     */
-    private $socialNetworks;
-
-    /**
      * @ORM\Column(type="string", length=255)
      */
     private $etherpadAuthorId;
@@ -80,7 +75,6 @@ class User implements UserInterface
         $this->events = new ArrayCollection();
         $this->groups = new ArrayCollection();
         $this->userEvents = new ArrayCollection();
-        $this->socialNetworks = new ArrayCollection();
     }
 
     public function __toString()
@@ -270,37 +264,6 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($userEvent->getUser() === $this) {
                 $userEvent->setUser(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|SocialNetwork[]
-     */
-    public function getSocialNetworks(): Collection
-    {
-        return $this->socialNetworks;
-    }
-
-    public function addSocialNetwork(SocialNetwork $socialNetwork): self
-    {
-        if (!$this->socialNetworks->contains($socialNetwork)) {
-            $this->socialNetworks[] = $socialNetwork;
-            $socialNetwork->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeSocialNetwork(SocialNetwork $socialNetwork): self
-    {
-        if ($this->socialNetworks->contains($socialNetwork)) {
-            $this->socialNetworks->removeElement($socialNetwork);
-            // set the owning side to null (unless already changed)
-            if ($socialNetwork->getUser() === $this) {
-                $socialNetwork->setUser(null);
             }
         }
 

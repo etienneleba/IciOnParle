@@ -5,8 +5,6 @@ namespace App\Controller\Admin;
 use App\Entity\Event;
 use App\Entity\Group;
 use App\Entity\Registered;
-use App\Entity\SocialNetwork;
-use App\Entity\SocialNetworkType;
 use App\Entity\Step;
 use App\Entity\User;
 use App\Entity\UserEvent;
@@ -43,7 +41,5 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Step', 'fa fa-check', Step::class);
         yield MenuItem::linkToCrud('Group', 'fa fa-users', Group::class);
         yield MenuItem::linkToCrud('UserEvent', 'fa fa-user-plus', UserEvent::class);
-        yield MenuItem::linkToCrud('SocialNetwork', 'fa fa-project-diagram', SocialNetwork::class);
-        yield MenuItem::linkToCrud('SocialNetworkType', 'fa fa-project-diagram', SocialNetworkType::class);
     }
 }

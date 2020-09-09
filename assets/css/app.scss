@@ -80,40 +80,12 @@ nav {
   }
 }
 
-.tabs-content {
-  section {
-    display: none;
-  }
-
-  section.is-active {
-    display: block;
-  }
-}
-
-#embed-etherpad {
-  position: absolute;
-  height: calc(100vh - 220px);
-  top: 150px;
-  width: 100vw;
-  left: 0;
-  right: 0;
-}
-
 footer {
   min-height: 200px;
   background-color: $primary-dark;
   position: absolute;
   width: 100%;
   bottom: 0;
-}
-
-@media screen and (min-width: 600px) {
-  #embed-etherpad {
-    position: relative;
-    height: 70vh;
-    top: 0;
-    width: 100%;
-  }
 }
 
 @media screen and (min-width: 800px) {

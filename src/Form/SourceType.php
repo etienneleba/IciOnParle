@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Source;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -14,7 +15,9 @@ class SourceType extends AbstractType
     {
         $builder
             ->add('title', TextType::class)
-            ->add('link', TextType::class)
+            ->add('link', UrlType::class, [
+                'default_protocol' => null,
+            ])
         ;
     }
 

@@ -21,6 +21,10 @@ $addColors: (
   ),
 );
 
+$input-icon-active-color: $secondary;
+$tabs-link-active-color: $primary;
+$tabs-link-active-border-bottom-color: $secondary;
+
 $colors: map-merge($colors, $addColors);
 
 $size-8: 0.55rem;

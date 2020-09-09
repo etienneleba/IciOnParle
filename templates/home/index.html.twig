@@ -15,7 +15,12 @@
 					<h1 class="is-size-1 has-text-primary has-text-weight-bold mb-2">La délibération citoyenne à grande échelle</h1>
 					<div class="">Collaborer autour d’une question, d’une problématique, d’un projet à 100, 1000 ou 10 000 c’est maintenant possible</div>
 				</div>
-				<a href="{{ path('event_viewAll')}}" class="button is-primary">Voir les événements</a>
+				{% if app.user %}
+					<a href="{{ path('app_dashboard')}}" class="button is-primary">Voir les événements</a>
+				{% else %}
+					<a href="{{ path('event_viewAll')}}" class="button is-primary">Voir les événements</a>
+				{% endif %}
+
 
 			</div>
 			<div class="column has-text-centered is-hidden-touch">

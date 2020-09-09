@@ -5,12 +5,52 @@
 {% set active = false %}
 
 {% block content %}
-	{% if sourceForm is not defined %}
-		{% set sourceForm = formGenerator.sourceForm(event.id) %}
-	{% endif %}
 
-	{{form_start(sourceForm)}}
-	<button type="submit" class="button is-small is-primary">Créer</button>
-	{{form_end(sourceForm)}}
+	<div class="px-4 mt-5">
+
+		<div class="mt-5 mb-5">
+			Ajouter des sources pour informer les participants sur la problématique de l'événement
+		</div>
+		{{ form_start(sourceForm) }}
+		{{ form_errors(sourceForm)}}
+
+		<div class="field mt-5">
+			<div class="control has-icons-left">
+				{{ form_widget(sourceForm.title, {
+				attr: {
+					class: "input",
+					placeholder: "Titre"
+				}
+			}) }}
+
+				<span class="icon is-small is-left">
+					<i class="fas fa-heading"></i>
+				</span>
+			</div>
+
+		</div>
+		<div class="field mt-4">
+			<div class="control has-icons-left">
+				{{ form_widget(sourceForm.link, {
+				attr: {
+					class: "input",
+					placeholder: "Lien ex: http://domain.com",
+					type: "url"
+				}
+			}) }}
+
+				<span class="icon is-small is-left">
+					<i class="fas fa-link"></i>
+				</span>
+			</div>
+
+		</div>
+
+
+		<div class="has-text-centered mt-5">
+			<button type="submit" class="button is-primary is-outlined mt-5 px-5" class="btn">Créer</button>
+		</div>
+
+		{{ form_end(sourceForm) }}</div>
 
 {% endblock %}

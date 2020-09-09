@@ -25,19 +25,21 @@ window.toggleTarget = function toggleTarget() {
 };
 
 window.toggleTab = function toggleTab() {
-  let target = event.srcElement.dataset.target;
-  let targetElement = document.getElementById(target);
+  if (event.currentTarget.nodeName == "A") {
+    let target = event.currentTarget.dataset.target;
+    let targetElement = document.getElementById(target);
 
-  for (var item of document.querySelectorAll(".tabs li.is-active")) {
-    item.classList.remove("is-active");
+    for (var item of document.querySelectorAll(".tabs li.is-active")) {
+      item.classList.remove("is-active");
+    }
+
+    for (var item of document.querySelectorAll(
+      ".tabs-content section.is-active"
+    )) {
+      item.classList.remove("is-active");
+    }
+
+    targetElement.classList.toggle("is-active");
+    event.currentTarget.parentNode.classList.toggle("is-active");
   }
-
-  for (var item of document.querySelectorAll(
-    ".tabs-content section.is-active"
-  )) {
-    item.classList.remove("is-active");
-  }
-
-  targetElement.classList.toggle("is-active");
-  event.srcElement.parentNode.classList.toggle("is-active");
 };

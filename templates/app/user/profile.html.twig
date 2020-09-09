@@ -10,9 +10,5 @@
 	<br>
 	{{ user.email}}
 	<br>
-	{% for socialNetwork in user.socialNetworks %}
-		{{ socialNetwork.socialNetworkType.name }}
-		:
-		{{ socialNetwork.link }}
-	{% endfor %}
+
 {% endblock %}

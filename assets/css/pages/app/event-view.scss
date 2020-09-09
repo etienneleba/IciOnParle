@@ -1,0 +1,58 @@
+@import "../../app.scss";
+
+.tabs li.is-active i {
+  color: $secondary;
+}
+.tabs li i {
+  color: $primary;
+}
+.tabs-content {
+  section {
+    // BUG : with display: none; etherpad doesn't start
+    visibility: hidden;
+    height: 0px !important;
+    overflow: hidden;
+  }
+
+  section.is-active {
+    display: block;
+    visibility: initial;
+    height: initial !important;
+    overflow: initial;
+    position: relative;
+  }
+}
+
+#embed-etherpad {
+  position: absolute;
+  height: calc(100vh - 120px);
+  width: 100vw;
+  left: 0;
+  right: 0;
+}
+
+#infos .tiles .box {
+  padding-top: 70px;
+  padding-bottom: 70px;
+  text-align: center;
+  color: $primary;
+  font-weight: bold;
+}
+
+#library .box {
+  min-height: 30vh;
+}
+
+@media screen and (min-width: 600px) {
+  #embed-etherpad {
+    position: relative;
+    height: 85vh;
+    top: 0;
+    width: 100%;
+  }
+
+  .library-title-box {
+    display: flex;
+    justify-content: space-between;
+  }
+}

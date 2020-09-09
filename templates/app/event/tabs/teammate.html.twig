@@ -1,0 +1,22 @@
+<div class="columns is-centered">
+	<div class="column is-10">
+		<div class="box">
+			<div class="is-size-2 has-text-primary has-text-weight-bold mb-5 ">
+				<span class="underline-title">{{ user.firstname ~ ' ' ~ user.lastname | slice(0, 1) ~ '.'}}</span>
+			</div>
+
+			{% if event.getCurrentStep.rank > 1 %}
+				<div class="is-size-4 has-text-primary has-text-weight-bold mt-5 mb-4">
+					<span class="underline-title">Rapport du groupe précédent de
+						{{ user.firstname }}</span>
+				</div>
+				<div class="mt-5">
+
+					{{ user.getFinalTextFromStep(event.getPreviousStep) | raw}}
+				</div>
+			{% endif %}
+
+
+		</div>
+	</div>
+</div>

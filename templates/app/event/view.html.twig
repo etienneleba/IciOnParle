@@ -1,68 +1,76 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-	{{ parent()}}
+	{{ parent() ~ event.title }}
+{% endblock %}
+
+{% block stylesheets %}
+	{{ encore_entry_link_tags('app-event-view-css') }}
 {% endblock %}
 
 {% block body %}
-	<div class="container">
+	{% set tab = tab is not defined ? app.request.get('tab') : tab %}
+
+	<div class="container px-3">
 		<div class="tabs is-centered">
 			<ul>
-				<li class="{{ app.request.get('tab') == 'pad' or app.request.get('tab') is null ? 'is-active'}}">
-					<a data-target="pad" onclick="toggleTab()">Pad</a>
+				<li class="{{ tab == 'pad' or tab is null ? 'is-active'}}">
+
+					<a data-target="pad" onclick="toggleTab()">
+						<span data-target="pad" class="icon is-small">
+							<i class="fas fa-file-alt" aria-hidden="true"></i>
+						</span>
+						<span>Pad</span>
+					</a>
 				</li>
-				<li class="{{ app.request.get('tab') == 'info' ? 'is-active'}}">
-					<a data-target="info" onclick="toggleTab()">Info</a>
+				<li class="{{ tab == 'infos' ? 'is-active'}}">
+					<a data-target="infos" onclick="toggleTab()">
+						<span class="icon is-small">
+							<i class="fas fa-info-circle" aria-hidden="true"></i>
+						</span>
+						<span>Infos</span>
+					</a>
 				</li>
-				<li class="{{ app.request.get('tab') == 'library' ? 'is-active'}}">
-					<a data-target="library" onclick="toggleTab()">Bibliothèque</a>
+				<li class="{{ tab == 'library' ? 'is-active'}}">
+					<a data-target="library" onclick="toggleTab()">
+						<span class="icon is-small">
+							<i class="fas fa-book" aria-hidden="true"></i>
+						</span>
+						<span>Bibliothèque</span>
+					</a>
 				</li>
 				{% for user in group.users %}
-					<li class="{{ app.request.get('tab') == 'teammate{{loop.index}}' ? 'is-active'}}">
-						<a data-target="teammate{{loop.index}}" onclick="toggleTab()">{{ user.firstname ~ ' ' ~ user.lastname | slice(0, 1) ~ '.'}}</a>
+					<li class="{{ tab == 'teammate{{loop.index}}' ? 'is-active'}}">
+						<a data-target="teammate{{loop.index}}" onclick="toggleTab()">
+							<span class="icon is-small">
+								<i class="fas fa-user" aria-hidden="true"></i>
+							</span>
+							<span>{{ user.firstname ~ ' ' ~ user.lastname | slice(0, 1) ~ '.'}}</span>
+						</a>
 					</li>
 				{% endfor %}
 			</ul>
 		</div>
 
 		<div class="tabs-content">
-			<section id="pad" class="{{ app.request.get('tab') == 'pad' or app.request.get('tab') is null ? 'is-active'}}">
-				<iframe id="embed-etherpad" name="embed_readwrite" src="{{ app.request.getSchemeAndHttpHost() }}:9001/p/{{ group.etherpadPadId}}" frameborder="0"></iframe>
-
+			<section id="pad" class="{{ tab == 'pad' or tab is null ? 'is-active'}}">
+				{% include "/app/event/tabs/pad.html.twig" %}
 			</section>
-			<section class="{{ app.request.get('tab') == 'info' ? 'is-active'}}" id="info">
-				<h1>{{ event.title }}
-					-
-					{{ event.startDate | date("d/m/Y", "Europe/Paris")}}</h1>
+			<section class="{{ tab == 'infos' ? 'is-active'}}" id="infos">
 
-				<p>{{ event.description}}</p>
+				{% include "/app/event/tabs/infos.html.twig" %}
 
 			</section>
 
-			<section class="{{ app.request.get('tab') == 'library' ? 'is-active'}}" id="library">
-				<h1 class="is-size-2 is-primary mb-4">Bibliothèque</h1>
+			<section class="{{ tab == 'library' ? 'is-active'}}" id="library">
 
-				{% for source in event.sources  %}
-					<div class="mb-3">
-						<div class="is-size-4">{{ source.title | capitalize }}</div>
-						<div>
-							<a target="_blank" href="{{ source.link}}">{{ source.link | capitalize }}</a>
-						</div>
-					</div>
+				{% include "/app/event/tabs/library.html.twig" %}
 
-
-				{% endfor %}
-
-				<button data-target="modalAddSource" onclick="toggleTarget()" class="button is-primary is-outlined">Ajouter une source</button>
 			</section>
 
 			{% for user in group.users %}
-				<section class="{{ app.request.get('tab') == 'teammate' ~ loop.index ? 'is-active'}}" id="teammate{{loop.index}}">
-					{{ user.firstname }}
-					{{ user.lastname }}
-					{{ user.email}}
-
-					<div class="has-background-white">{{ user.getFinalTextFromStep(event.getPreviousStep) | raw}}</div>
+				<section class="{{ tab == 'teammate' ~ loop.index ? 'is-active'}}" id="teammate{{loop.index}}">
+					{% include "/app/event/tabs/teammate.html.twig" %}
 				</section>
 			{% endfor %}
 		</div>
@@ -70,7 +78,7 @@
 	</div>
 
 
-	{% include "_modals/add-source.html.twig" %}
-
-
+	{% include "_modals/add-source.html.twig" with {
+		'sourceForm': sourceForm
+	} %}
 {% endblock %}

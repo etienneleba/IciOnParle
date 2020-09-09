@@ -31,7 +31,7 @@ class EventController extends AbstractController
     /**
      * @Route("/view/{id}", name="view")
      */
-    public function view(Event $event, EntityManagerInterface $em)
+    public function view(Event $event, Request $request, EntityManagerInterface $em)
     {
         if (false == $event->getStarted()) {
             return $this->redirectToRoute('app_dashboard');
@@ -43,6 +43,31 @@ class EventController extends AbstractController
             return $this->redirectToRoute('app_event_finished', ['id' => $event->getId()]);
         }
 
+        $source = (new Source())
+            ->setEvent($event)
+        ;
+
+        $sourceForm = $this->createForm(SourceType::class, $source);
+
+        $sourceForm->handleRequest($request);
+
+        if ($sourceForm->isSubmitted()) {
+            if ($sourceForm->isValid()) {
+                $event->addSource($source);
+
+                $em->persist($source);
+
+                $em->flush();
+            }
+
+            return $this->render('app/event/view.html.twig', [
+                'group' => $group,
+                'event' => $event,
+                'sourceForm' => $sourceForm->createView(),
+                'tab' => 'library',
+            ]);
+        }
+
         $validUntil = strtotime('+1 day');
 
         $sessionId = $this->etherpadClient->createSession($group->getEtherpadGroupId(), $this->getUser()->getEtherpadAuthorId(), $validUntil);
@@ -52,7 +77,7 @@ class EventController extends AbstractController
         $response = $this->render('app/event/view.html.twig', [
             'group' => $group,
             'event' => $event,
-            'registered' => $event->isRegistered($this->getUser()),
+            'sourceForm' => $sourceForm->createView(),
         ]);
 
         $response->headers->setCookie($cookie);
@@ -94,6 +119,12 @@ class EventController extends AbstractController
      */
     public function unregister(Event $event, EntityManagerInterface $em)
     {
+        if ($event->getStarted()) {
+            $this->addFlash('warning', 'L\'événement : '.$event->getTitle().' a déjà commencé, vous ne pouvez pas vous désinscrire');
+
+            return $this->redirectToRoute('app_dashboard');
+        }
+
         $userEvents = $em->getRepository(UserEvent::class)->findBy(['user' => $this->getUser(), 'event' => $event]);
 
         foreach ($userEvents as $userEvent) {
@@ -122,22 +153,6 @@ class EventController extends AbstractController
      */
     public function addSource(Request $request, Event $event, EntityManagerInterface $em)
     {
-        $source = (new Source())
-            ->setEvent($event)
-        ;
-
-        $form = $this->createForm(SourceType::class, $source);
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $event->addSource($source);
-
-            $em->persist($source);
-
-            $em->flush();
-        }
-
         return $this->redirectToRoute('app_event_view', ['id' => $event->getId(), 'tab' => 'library']);
     }
 }

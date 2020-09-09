@@ -113,6 +113,15 @@ class Event
         return $this->title;
     }
 
+    public function shuffledSources()
+    {
+        $sources = $this->getSources()->toArray();
+
+        shuffle($sources);
+
+        return $sources;
+    }
+
     public function isRegistered(User $user)
     {
         /** @var UserEvent $userEvent */

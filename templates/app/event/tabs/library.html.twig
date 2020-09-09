@@ -1,0 +1,30 @@
+<div class="columns is-centered">
+	<div class="column is-10">
+		<div class="box">
+			<div class="library-title-box mb-3">
+				<h1 class="is-size-2 is-size-3-touch has-text-primary mb-4 has-text-weight-bold">
+					<span class="underline-title">Bibliothèque</span>
+
+				</h1>
+				{% if app.request.get('_route') == 'app_event_view' %}
+					<button data-target="modalAddSource" onclick="toggleTarget()" class="button is-primary is-outlined">Ajouter une source</button>
+				{% endif %}
+
+
+			</div>
+
+			{% for source in event.shuffledSources  %}
+				<div class="mb-3">
+					<div class="is-size-4">{{ source.title | capitalize }}</div>
+					<div>
+						<a target="_blank" href="{{ source.link}}">{{ source.link }}</a>
+					</div>
+				</div>
+
+
+			{% endfor %}
+
+
+		</div>
+	</div>
+</div>

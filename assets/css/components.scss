@@ -60,9 +60,9 @@
     top: 0px;
     height: 1px;
     width: 18%; /* percentage of the element width*/
-    border-bottom: 0.15em solid $secondary;
+    border-bottom: 0.14em solid $secondary;
     border-radius: 0 0 0.1em 0;
-    margin-top: 1.25em; /*move the border below the text*/
+    margin-top: 1.3em; /*move the border below the text*/
   }
 }
 
@@ -125,8 +125,7 @@
     }
   }
 
-  #modalLogin,
-  #modalRegister {
+  .modal {
     .modal-content {
       width: 400px;
     }

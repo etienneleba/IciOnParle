@@ -1,0 +1,29 @@
+<div class="columns is-centered">
+	<div class="column is-10">
+		<div class="box">
+			<h1 class="is-size-2 is-size-3-touch has-text-primary has-text-weight-bold mb-5">
+				<span class="underline-title">{{ event.title }}</span>
+			</h1>
+
+			<p>{{ event.description}}</p>
+		</div>
+
+		<div class="columns is-size-3 is-size-4-touch tiles">
+			<div class="column">
+				<div class="box">Etape
+					<span class="has-text-secondary">{{event.getCurrentStep.rank}}</span>
+				</div>
+			</div>
+			<div class="column">
+				<div class="box">
+					<span class="has-text-secondary">{{ event.getCurrentStep.groups | length}}</span>
+					groupes</div>
+			</div>
+			<div class="column">
+				<div class="box">
+					<span class="has-text-secondary">{{ event.getCurrentStep.nbParticipants }}</span>
+					participants</div>
+			</div>
+		</div>
+	</div>
+</div>

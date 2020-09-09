@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\SourceRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=SourceRepository::class)
@@ -24,6 +25,7 @@ class Source
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Url
      */
     private $link;
 

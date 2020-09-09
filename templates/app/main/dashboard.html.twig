@@ -6,7 +6,7 @@
 
 {% block body %}
 
-	<div class="container">
+	<div class="container px-3">
 
 		<div class="columns is-centered mb-5 mt-5">
 			<div class="column is-four-fifths">
@@ -39,6 +39,8 @@
 						'target': false,
 						'registered':false
 					} %}
+				{% else %}
+					<div class="has-text-centered">Vous serez prévenu par mail dès qu'un événement sera créé</div>
 				{% endif %}
 			</div>
 		</div>

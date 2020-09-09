@@ -32,11 +32,11 @@
 
 
 					<div class="navbar-end">
-
+						<div class="navbar-item">
+							<a href="#" class="nav-link">A propos</a>
+						</div>
 						{% if not app.user %}
-							<div class="navbar-item">
-								<a href="#" class="nav-link">A propos</a>
-							</div>
+
 							<div class="navbar-item">
 								<a href="{{ path('event_viewAll')}}" class="nav-link">Evénements</a>
 							</div>
@@ -54,9 +54,6 @@
 						{% else %}
 							<div class=" navbar-item">
 								<a href="{{ path('app_dashboard')}}" class="nav-link">Evénements</a>
-							</div>
-							<div class=" navbar-item">
-								<a href="#" class="has-text-black nav-link" data-target="modalProfile" onclick="toggleTarget()">Profile</a>
 							</div>
 							<div class="navbar-item">
 								<a href="{{ path('app_logout')}}" class="nav-link">Se déconnecter</a>
@@ -110,8 +107,7 @@
 			{% include "_modals/login.html.twig"%}
 
 			{% include "_modals/register.html.twig"%}
-		{% else %}
-			{% include "_modals/profile.html.twig" %}
+			{% else %}
 
 		{% endif %}
 

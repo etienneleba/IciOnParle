@@ -5,6 +5,45 @@
 	Evénement
 {% endblock %}
 
+{% block stylesheets %}
+	{{ encore_entry_link_tags('app-event-view-css') }}
+{% endblock %}
+
 {% block body %}
-	{{ event.title }}
+	<div class="container">
+		{% set tab = tab is not defined ? app.request.get('tab') : tab %}
+
+		<div class="container px-3">
+			<div class="tabs is-centered">
+				<ul>
+					<li class="{{ tab == 'infos' or tab is null ? 'is-active'}}">
+						<a data-target="infos" onclick="toggleTab()">Infos</a>
+					</li>
+					<li class="{{ tab == 'library' ? 'is-active'}}">
+						<a data-target="library" onclick="toggleTab()">Bibliothèque</a>
+					</li>
+
+				</ul>
+			</div>
+
+			<div class="tabs-content">
+
+				<section class="{{ tab == 'infos' or tab == null ? 'is-active'}}" id="infos">
+
+					{% include "/app/event/tabs/infos.html.twig" %}
+
+				</section>
+
+				<section class="{{ tab == 'library' ? 'is-active'}}" id="library">
+
+					{% include "/app/event/tabs/library.html.twig" %}
+
+				</section>
+
+
+			</div>
+
+		</div>
+
+	</div>
 {% endblock %}

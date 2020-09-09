@@ -5,5 +5,3 @@ easy_admin:
     - App\Entity\Registered
     - App\Entity\Event
     - App\Entity\UserEvent
-    - App\Entity\SocialNetwork
-    - App\Entity\SocialNetworkType
