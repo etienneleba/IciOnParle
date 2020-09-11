@@ -3,7 +3,8 @@ FROM php:7.4-fpm
 RUN apt-get update && apt-get install -y \
       wget \
       git \
-      fish
+      fish \
+      unzip
 
 RUN apt-get update && apt-get install -y libzip-dev libicu-dev && docker-php-ext-install pdo zip intl
 

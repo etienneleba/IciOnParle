@@ -10,8 +10,10 @@ use App\Form\SourceType;
 use App\Service\EtherpadClient;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\ConstraintViolationInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -36,6 +38,11 @@ class EventController extends AbstractController
         if (false == $event->getStarted()) {
             return $this->redirectToRoute('app_dashboard');
         }
+
+        if ($event->getFinished()) {
+            return $this->redirectToRoute('app_event_finished', ['id' => $event->getId()]);
+        }
+
         /** @var Group $group */
         $group = $em->getRepository(Group::class)->findOneByUserStep($this->getUser(), $event->getCurrentStep());
 
@@ -149,10 +156,27 @@ class EventController extends AbstractController
     }
 
     /**
-     * @Route("/addSource/{id}", name="addSource")
+     * @Route("/pdf/{id}", name="pdf")
      */
-    public function addSource(Request $request, Event $event, EntityManagerInterface $em)
+    public function pdf(Event $event)
     {
-        return $this->redirectToRoute('app_event_view', ['id' => $event->getId(), 'tab' => 'library']);
+        if (!$event->getFinished()) {
+            $this->addFlash('warning', 'L\'événement n\'est pas encore fini, vous ne pouvez pas télécharger le rapport final');
+
+            return $this->redirectToRoute('app_event_view', ['id' => $event->getId()]);
+        }
+        if (null == $event->getPdfPath() || !file_exists($event->getPdfPath())) {
+            $this->addFlash('warning', 'Le rapport final de cette événement n\'a pas été sauvegardé');
+
+            return $this->redirectToRoute('app_event_view', ['id' => $event->getId()]);
+        }
+
+        $response = new BinaryFileResponse($event->getPdfPath());
+        $response->setContentDisposition(
+            ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+            $event->getTitle().'.pdf'
+        );
+
+        return $response;
     }
 }

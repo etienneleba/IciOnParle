@@ -52,14 +52,14 @@ class AppFixtures extends Fixture
             ->setNbDaysStep(7)
             ->setNbDaysLastStep(15)
             ->setNbMaxUser(200)
-            ->setNbMinUsersPerGroup(2)
-            ->setNbMinUsersFinalGroup(5)
+            ->setNbMinUsersPerGroup(1)
+            ->setNbMinUsersFinalGroup(4)
             ->setCreatedAt(new DateTime())
         ;
 
         $manager->persist($event);
 
-        $populator->addEntity(User::class, 100, [
+        $populator->addEntity(User::class, 3, [
             'isVerified' => true,
         ], [
             function (User $user) use ($faker, $event) {

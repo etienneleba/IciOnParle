@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Event;
 use App\Entity\Group;
 use App\Service\EtherpadClient;
+use App\Service\PdfHelper;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
@@ -28,10 +29,14 @@ class EventCrudController extends AbstractCrudController
     /** @var EtherpadClient */
     private $etherpadClient;
 
-    public function __construct(EntityManagerInterface $em, EtherpadClient $etherpadClient)
+    /** @var PdfHelper */
+    private $pdfHelper;
+
+    public function __construct(EntityManagerInterface $em, EtherpadClient $etherpadClient, PdfHelper $pdfHelper)
     {
         $this->em = $em;
         $this->etherpadClient = $etherpadClient;
+        $this->pdfHelper = $pdfHelper;
     }
 
     public static function getEntityFqcn(): string
@@ -149,6 +154,10 @@ class EventCrudController extends AbstractCrudController
             $group->setFinalText($this->etherpadClient->getHTML($group->getEtherpadPadId()));
             $this->etherpadClient->deleteGroup($group->getEtherpadGroupId());
         }
+
+        $pdfFilepath = $this->pdfHelper->createPdfFromEvent($event);
+
+        $event->setPdfPath($pdfFilepath);
 
         $this->em->flush();
 

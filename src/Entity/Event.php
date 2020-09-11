@@ -101,6 +101,11 @@ class Event
      */
     private $finished = false;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $pdfPath;
+
     public function __construct()
     {
         $this->steps = new ArrayCollection();
@@ -190,6 +195,15 @@ class Event
         }
 
         return $finalStep;
+    }
+
+    public function getFinalText()
+    {
+        if (!$this->finished) {
+            return null;
+        }
+
+        return $this->getCurrentStep()->getGroups()[0]->getFinalText();
     }
 
     public function nextStep(?Step $step): Step
@@ -513,6 +527,18 @@ class Event
     public function setFinished(bool $finished): self
     {
         $this->finished = $finished;
+
+        return $this;
+    }
+
+    public function getPdfPath(): ?string
+    {
+        return $this->pdfPath;
+    }
+
+    public function setPdfPath(?string $pdfPath): self
+    {
+        $this->pdfPath = $pdfPath;
 
         return $this;
     }
