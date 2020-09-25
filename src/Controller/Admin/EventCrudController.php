@@ -118,6 +118,8 @@ class EventCrudController extends AbstractCrudController
 
         $this->em->flush();
 
+        $this->mailerHelper->sendEmailEventStarted($event);
+
         return $this->redirect($this->get(CrudUrlGenerator::class)->build()->setController(EventCrudController::class)->setAction('index')->generateUrl());
     }
 
@@ -155,6 +157,8 @@ class EventCrudController extends AbstractCrudController
 
         $this->em->flush();
 
+        $this->mailerHelper->sendEmailEventNextStep($event);
+
         return $this->redirect($this->get(CrudUrlGenerator::class)->build()->setController(EventCrudController::class)->setAction('index')->generateUrl());
     }
 
@@ -177,6 +181,8 @@ class EventCrudController extends AbstractCrudController
         $event->setPdfPath($pdfFilepath);
 
         $this->em->flush();
+
+        $this->mailerHelper->sendEmailEventFinished($event);
 
         return $this->redirect($this->get(CrudUrlGenerator::class)->build()->setController(EventCrudController::class)->setAction('index')->generateUrl());
     }

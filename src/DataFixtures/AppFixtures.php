@@ -8,7 +8,8 @@ use App\Entity\UserEvent;
 use App\Service\EtherpadClient;
 use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 use Faker\ORM\Doctrine\Populator;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -20,10 +21,13 @@ class AppFixtures extends Fixture
     /** @var EtherpadClient */
     private $etherpadClient;
 
-    public function __construct(UserPasswordEncoderInterface $encoder, EtherpadClient $etherpadClient)
+    private $em;
+
+    public function __construct(UserPasswordEncoderInterface $encoder, EtherpadClient $etherpadClient, EntityManagerInterface $em)
     {
         $this->encoder = $encoder;
         $this->etherpadClient = $etherpadClient;
+        $this->em = $em;
     }
 
     public function load(ObjectManager $manager)
@@ -59,7 +63,7 @@ class AppFixtures extends Fixture
 
         $manager->persist($event);
 
-        $populator->addEntity(User::class, 3, [
+        $populator->addEntity(User::class, 10, [
             'isVerified' => true,
         ], [
             function (User $user) use ($faker, $event) {

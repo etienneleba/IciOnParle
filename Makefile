@@ -34,6 +34,9 @@ composer-require-dev:
 composer-install: 
 	docker-compose run --rm php composer install 
 
+composer-update:
+	docker-compose run --rm php composer update
+
 yarn-install:
 	# To be log as the node user on the container and be allowed to use the npm/yarn cache (if you have a better way pls tell me)
 	LOCAL_USER=1000 docker-compose run --rm node yarn install 

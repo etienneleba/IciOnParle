@@ -45,6 +45,17 @@ class Step
         $this->groups = new ArrayCollection();
     }
 
+    public function getUsers()
+    {
+        $users = [];
+        /** @var Group $group */
+        foreach ($this->getGroups() as $group) {
+            $users = array_merge($users, $group->getUsers()->toArray());
+        }
+
+        return $users;
+    }
+
     public function getNbParticipants()
     {
         $nb = 0;

@@ -31,6 +31,6 @@ class EventSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $this->mailerHelper->sendMailEventCreated($entity);
+        $this->mailerHelper->sendEmailEventCreated($entity);
     }
 }
