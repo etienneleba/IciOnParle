@@ -33,3 +33,6 @@ services:
   App\Service\FormGenerator:
     arguments:
       $formFactory: "@form.factory"
+
+  App\EventSubscriber\Admin\EventSubscriber:
+    tags: ["kernel.event_subscriber"]

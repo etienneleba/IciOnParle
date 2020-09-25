@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Event;
 use App\Entity\Group;
 use App\Service\EtherpadClient;
+use App\Service\MailerHelper;
 use App\Service\PdfHelper;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
@@ -32,11 +33,15 @@ class EventCrudController extends AbstractCrudController
     /** @var PdfHelper */
     private $pdfHelper;
 
-    public function __construct(EntityManagerInterface $em, EtherpadClient $etherpadClient, PdfHelper $pdfHelper)
+    /** @var MailerHelper */
+    private $mailerHelper;
+
+    public function __construct(EntityManagerInterface $em, EtherpadClient $etherpadClient, PdfHelper $pdfHelper, MailerHelper $mailerHelper)
     {
         $this->em = $em;
         $this->etherpadClient = $etherpadClient;
         $this->pdfHelper = $pdfHelper;
+        $this->mailerHelper = $mailerHelper;
     }
 
     public static function getEntityFqcn(): string
@@ -100,13 +105,16 @@ class EventCrudController extends AbstractCrudController
         $event = $adminContext->getEntity()->getInstance();
         $newStep = $event->nextStep($event->getCurrentStep());
 
+        $event->addStep($newStep);
+
         /** @var Group $group */
         foreach ($newStep->getGroups() as $group) {
             $group->setEtherpadGroupId($this->etherpadClient->createGroup());
             $group->setEtherpadPadId($this->etherpadClient->createGroupPad($group->getEtherpadGroupId()));
+            $this->etherpadClient->setHTML($group->getEtherpadPadId(), $this->renderView('_texts/firstText.html.twig', [
+                'group' => $group,
+            ]));
         }
-
-        $event->addStep($newStep);
 
         $this->em->flush();
 
@@ -122,10 +130,21 @@ class EventCrudController extends AbstractCrudController
 
         $newStep = $event->nextStep($currentStep);
 
+        $event->addStep($newStep);
+
         /** @var Group $group */
         foreach ($newStep->getGroups() as $group) {
             $group->setEtherpadGroupId($this->etherpadClient->createGroup());
             $group->setEtherpadPadId($this->etherpadClient->createGroupPad($group->getEtherpadGroupId()));
+            if ($newStep->getFinalStep()) {
+                $this->etherpadClient->setHTML($group->getEtherpadPadId(), $this->renderView('_texts/lastText.html.twig', [
+                    'group' => $group,
+                ]));
+            } else {
+                $this->etherpadClient->setHTML($group->getEtherpadPadId(), $this->renderView('_texts/nextText.html.twig', [
+                    'group' => $group,
+                ]));
+            }
         }
 
         /** @var Group $group */
@@ -133,8 +152,6 @@ class EventCrudController extends AbstractCrudController
             $group->setFinalText($this->etherpadClient->getHTML($group->getEtherpadPadId()));
             $this->etherpadClient->deleteGroup($group->getEtherpadGroupId());
         }
-
-        $event->addStep($newStep);
 
         $this->em->flush();
 

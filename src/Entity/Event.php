@@ -240,8 +240,8 @@ class Event
             }
             $newStep->setRank($step->getRank() + 1);
         }
-
         $nbUsers = count($users);
+
         $nbGroup = $nbUsers > $this->nbMinUsersFinalGroup ? floor($nbUsers / $this->nbMinUsersPerGroup) : 1;
         if (1 == $nbGroup) {
             $newStep->setFinalStep(true);

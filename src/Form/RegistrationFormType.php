@@ -24,13 +24,17 @@ class RegistrationFormType extends AbstractType
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
                 'mapped' => false,
+                'attr' => [
+                    'pattern' => '^.{8}',
+                    'title' => 'Votre mot de passe doit contenir au moins 8 caractères',
+                ],
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Please enter a password',
+                        'message' => 'Entrer un mot de passe, s\'il vous plaît',
                     ]),
                     new Length([
                         'min' => 8,
-                        'minMessage' => 'Your password should be at least {{ limit }} characters',
+                        'minMessage' => 'Votre mot de passe doit contenir au moins 8 caractères',
                         // max length allowed by Symfony for security reasons
                         'max' => 4096,
                     ]),

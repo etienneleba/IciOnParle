@@ -34,6 +34,14 @@ class EtherpadClient
         return $content['data']['padID'];
     }
 
+    public function setHTML(string $padId, string $text): void
+    {
+        $this->api('setHTML', [
+            'padID' => $padId,
+            'html' => $text,
+        ]);
+    }
+
     public function deleteGroup(string $groupId)
     {
         $this->api('deleteGroup', [

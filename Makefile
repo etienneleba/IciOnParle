@@ -28,6 +28,9 @@ cache-warm:
 composer-require:
 	docker-compose run --rm php composer require $(req)
 
+composer-require-dev:
+	docker-compose run --rm php composer require --dev $(req)
+
 composer-install: 
 	docker-compose run --rm php composer install 
 

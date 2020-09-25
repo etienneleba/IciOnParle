@@ -100,6 +100,14 @@
 
 		{% if not app.user %}
 
+			{% if error is not defined %}
+				{% set error = null %}
+			{% endif %}
+
+			{% if lastUsername is not defined %}
+				{% set lastUsername = null %}
+			{% endif %}
+
 			{% include "_modals/login.html.twig" with {
 				'error' : error,
 				'lastUsername': lastUsername

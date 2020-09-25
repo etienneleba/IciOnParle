@@ -61,6 +61,18 @@ class Group
         return count($this->users);
     }
 
+    public function getUserNames(): string
+    {
+        $userNames = '';
+
+        // @var User
+        foreach ($this->getUsers() as $user) {
+            $userNames .= $user->getFirstname().', ';
+        }
+
+        return $userNames;
+    }
+
     public function getId(): ?int
     {
         return $this->id;

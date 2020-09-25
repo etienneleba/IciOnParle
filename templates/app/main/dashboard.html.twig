@@ -7,7 +7,6 @@
 {% block body %}
 
 	<div class="container px-3">
-
 		<div class="columns is-centered mb-5 mt-5">
 			<div class="column is-four-fifths">
 				<h1 class="is-size-3 is-size-4-touch has-text-primary has-text-weight-bold mb-5">
@@ -15,10 +14,10 @@
 				</h1>
 				{% if userEvents | length > 0 %}
 					{% include "_includes/loop_events.html.twig" with {
-						'events': userEvents,
-						'target': false,
-						'registered': true
-					} %}
+											'events': userEvents,
+											'target': false,
+											'registered': true
+										} %}
 				{% else %}
 
 					<div class="has-text-centered">Vous ne participez à aucun événements</div>
@@ -35,10 +34,10 @@
 				</h1>
 				{% if events | length > 0 %}
 					{% include "_includes/loop_events.html.twig" with {
-						'events': events,
-						'target': false,
-						'registered':false
-					} %}
+															'events': events,
+															'target': false,
+															'registered':false
+														} %}
 				{% else %}
 					<div class="has-text-centered">Vous serez prévenu par mail dès qu'un événement sera créé</div>
 				{% endif %}
