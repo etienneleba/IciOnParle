@@ -7,6 +7,14 @@ The goal of this project is to create a POC of a citizen deliberative assembly.
 - create event to test the concept of citizen deliberative assembly
 - handle 100 persons events
 
+## Presentation
+
+[![](docs/presentation.gif)](https://www.figma.com/proto/wIqxTmjXPcl8IBYOGuH2Uc/IciOnParle-Pr%C3%A9sentation?node-id=1%3A2&scaling=min-zoom)
+
+## Desgin
+
+[![](docs/design.gif)](https://www.figma.com/proto/iFCennEz3wUzmvwjdLN0nt/IciOnParle?node-id=75%3A16&scaling=min-zoom)
+
 ## Utilities
 
 - [Backlog](https://docs.google.com/spreadsheets/d/1T94v6RqeAq-eUHyvp37mLBgBNzDPI5fR10QI764wWbI/edit?usp=sharing)
