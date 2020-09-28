@@ -11,7 +11,7 @@ The goal of this project is to create a POC of a citizen deliberative assembly.
 
 [![](docs/presentation.gif)](https://www.figma.com/proto/wIqxTmjXPcl8IBYOGuH2Uc/IciOnParle-Pr%C3%A9sentation?node-id=1%3A2&scaling=min-zoom)
 
-## Desgin
+## Design
 
 [![](docs/design.gif)](https://www.figma.com/proto/iFCennEz3wUzmvwjdLN0nt/IciOnParle?node-id=75%3A16&scaling=min-zoom)
 
@@ -28,3 +28,18 @@ The goal of this project is to create a POC of a citizen deliberative assembly.
 - [Webpack Encore](https://symfony.com/doc/current/frontend.html)
 - [Bulma](https://bulma.io/documentation/)
 - [Etherpad 1.8.4](https://etherpad.org)
+
+## Version 1
+
+This repository is a POC of IciOnParle, the next step is to create the first version of IciOnParle.
+
+This first version would have to handle 1000 people and more. To do that, the architecture must be rethink.
+
+For the moment the idea is to create :
+
+- 1 API to handle authentification and business logic
+- 1 etherpad cluster
+- 1 etherpad orchestrator ([Orchestrator implementation](https://www.mdpi.com/2079-9292/9/5/828/htm))
+- 1 really simple js client that can go on a cdn and cache a lot of data to not overload the business API
+
+Like this, all the parts of the application are scalable.

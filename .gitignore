@@ -28,4 +28,8 @@ yarn-error.log
 /Etherpad/SESSIONKEY.txt
 ###> etherpad ###
 
+###> app ###
+/store/*
+###> app ###
+
 
