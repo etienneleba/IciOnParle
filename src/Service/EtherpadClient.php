@@ -91,8 +91,6 @@ class EtherpadClient
             return json_decode($response->getContent(), true);
         }
 
-        dd($response);
-
         throw new HttpException($response->getStatusCode(), $response->getContent()['message']);
     }
 }
