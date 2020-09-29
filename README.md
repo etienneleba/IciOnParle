@@ -2,6 +2,8 @@
 
 The goal of this project is to create a POC of a citizen deliberative assembly.
 
+The POC : http://www.ici-on-parle.fr/
+
 ## Objectives
 
 - create event to test the concept of citizen deliberative assembly
