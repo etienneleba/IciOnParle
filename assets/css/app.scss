@@ -81,11 +81,29 @@ nav {
 }
 
 footer {
-  min-height: 200px;
   background-color: $primary-dark;
   position: absolute;
   width: 100%;
   bottom: 0;
+  color: rgb(238, 238, 238);
+  a {
+    color: white;
+    &:hover {
+      color: #cfcfcf;
+    }
+  }
+  .container {
+    position: relative;
+    height: 100%;
+  }
+
+  .column {
+    max-width: 400px;
+  }
+
+  .columns {
+    justify-content: space-around;
+  }
 }
 
 @media screen and (min-width: 800px) {

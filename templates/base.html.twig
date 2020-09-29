@@ -33,7 +33,7 @@
 
 					<div class="navbar-end">
 						<div class="navbar-item">
-							<a href="#" class="nav-link">A propos</a>
+							<a href="#" class="nav-link">À propos</a>
 						</div>
 						{% if not app.user %}
 
@@ -95,7 +95,53 @@
 
 		{% block body %}{% endblock %}
 
-		<footer></footer>
+		<footer>
+			<div class="container px-3 py-5 is-size-7">
+				<div class="columns">
+					<div class="column">
+						<div class="is-size-6">
+							Sitemap :
+						</div>
+						<div>
+							<a href="{{ path('index')}}">IciOnParle</a>
+						</div>
+						{% if not app.user %}
+							<div>
+								<a href="{{ path('index', {login:1})}}">Connexion</a>
+							</div>
+							<div>
+								<a href="{{ path('index', {register:1})}}">S'inscrire</a>
+							</div>
+						{% endif %}
+						<div>
+							<a href="{{ path('event_viewAll')}}">Événements</a>
+						</div>
+						<div>
+							<a href="{{ path('event_viewAll')}}">À propos</a>
+						</div>
+					</div>
+					<div class="column">
+						<div class="is-size-6">
+							Crédits :
+						</div>
+						<div>
+							<a target="_blank" href="https://fontawesome.com/">Font awesome</a>
+						</div>
+						<div>
+							<a target="_blank" href="https://fr.freepik.com/pch.vector">Personnes vecteur créé par pch.vector - fr.freepik.com</a>
+						</div>
+						<div>
+							<a target="_blank" href="https://fr.freepik.com/macrovector_official">Fond vecteur créé par macrovector_official - fr.freepik.com</a>
+						</div>
+						<div>
+							<a target="_blank" href="https://github.com/etienneleba">Etienne Lebarillier</a>
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+		</footer>
 
 
 		{% if not app.user %}
