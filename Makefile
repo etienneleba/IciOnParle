@@ -6,8 +6,11 @@ re-build-project: down build-project
 up:
 	docker-compose up -d $(c)
 
+up-prod:
+	docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d nginx php db etherpad
+
 down: 
-	docker-compose down $(c)
+	docker-compose down
 
 stop: 
 	docker-compose stop $(c)
@@ -34,6 +37,9 @@ composer-require-dev:
 composer-install: 
 	docker-compose run --rm php composer install 
 
+composer-install-prod:
+	docker-compose run --rm php composer install -o
+
 composer-update:
 	docker-compose run --rm php composer update
 
@@ -56,5 +62,7 @@ deploy-test:
 # deploy-prod:
 #	git push prod master
 
-build-symfony-project : composer-install yarn-install yarn-build cache-clear #if you use symfony encore
+build-symfony-project : composer-install yarn-install yarn-build cache-clear cache-warm #if you use symfony encore
+
+build-symfony-project-prod : composer-install-prod yarn-install yarn-build cache-clear cache-warm #if you use symfony encore
 
