@@ -42,4 +42,12 @@ class HomeController extends AbstractController
             'lastUsername' => $lastUsername,
         ]);
     }
+
+    /**
+     * @Route("/about", name="about")
+     */
+    public function about()
+    {
+        return $this->render('home/about.html.twig');
+    }
 }
