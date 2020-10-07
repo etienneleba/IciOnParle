@@ -25,7 +25,7 @@ class RegistrationFormType extends AbstractType
                 // this is read and encoded in the controller
                 'mapped' => false,
                 'attr' => [
-                    'pattern' => '^.{8}',
+                    'pattern' => '^.{8}.*$',
                     'title' => 'Votre mot de passe doit contenir au moins 8 caractères',
                 ],
                 'constraints' => [
