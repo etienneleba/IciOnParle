@@ -25,7 +25,7 @@ class MailerHelper
     public function sendEmail(array $to, string $subject, string $template, array $context = [], array $attachements = []): bool
     {
         $email = (new TemplatedEmail())
-            ->from('mail@ici-on-parle.fr')
+            ->from('contact@ici-on-parle.fr')
             ->subject($subject)
             ->htmlTemplate($template)
             ->context($context)
