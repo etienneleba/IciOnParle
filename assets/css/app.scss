@@ -38,7 +38,7 @@ html {
   margin: 0;
   background-color: #f6f6f6;
   max-width: calc(100vw - 10px);
-  min-height: calc(100vh + 210px);
+  min-height: 100vh;
   position: relative;
 }
 
@@ -51,6 +51,7 @@ body {
     "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     "Helvetica", "Arial", sans-serif;
   max-width: calc(100vw - 10px);
+  min-height: 100vh;
 }
 
 nav {
@@ -102,11 +103,5 @@ footer {
 
   .columns {
     justify-content: space-around;
-  }
-}
-
-@media screen and (min-width: 800px) {
-  body {
-    min-height: calc(100vh + 200px);
   }
 }

@@ -55,6 +55,12 @@
 							<div class=" navbar-item">
 								<a href="{{ path('app_dashboard')}}" class="nav-link">Evénements</a>
 							</div>
+							{% if is_granted('ROLE_ADMIN') %}
+								<div class=" navbar-item">
+									<a href="{{ path('admin')}}" class="nav-link">Admin</a>
+								</div>
+							{% endif %}
+
 							<div class="navbar-item">
 								<a href="{{ path('app_logout')}}" class="nav-link">Se déconnecter</a>
 							</div>

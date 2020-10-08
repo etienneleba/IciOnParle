@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Registered;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Security\AppAuthenticator;
@@ -52,6 +53,13 @@ class RegistrationController extends AbstractController
             $user->setEtherpadAuthorId($this->etherpadClient->createAuthor($user->__toString()));
 
             $entityManager = $this->getDoctrine()->getManager();
+
+            // check if the email is in the registered list
+            $registered = $entityManager->getRepository(Registered::class)->findOneBy(['email' => $user->getEmail()]);
+            if (null != $registered) {
+                $entityManager->remove($registered);
+            }
+
             $entityManager->persist($user);
             $entityManager->flush();
 

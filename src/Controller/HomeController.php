@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Registered;
+use App\Entity\User;
 use App\Form\RegisteredType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -24,11 +25,17 @@ class HomeController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em->persist($registered);
+            $user = $em->getRepository(User::class)->findOneBy(['email' => $registered->getEmail()]);
 
-            $em->flush();
+            if ($user) {
+                $this->addFlash('warning', 'Vous avez déjà un compte sur IciOnParle, vous allez automatiquement être alerté des nouveaux événements');
+            } else {
+                $em->persist($registered);
 
-            $this->addFlash('success', 'Vous avez bien été ajouté à la liste');
+                $em->flush();
+
+                $this->addFlash('success', 'Vous avez bien été ajouté à la liste');
+            }
         }
 
         // get the login error if there is one

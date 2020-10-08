@@ -1,0 +1,4 @@
+corley_maintenance:
+  page: "%kernel.project_dir%/templates/maintenance.html"
+  hard_lock: hard.html
+  symlink: false

@@ -76,6 +76,7 @@
   .text {
     padding: 1.25em;
     height: calc(100% - 90px);
+    min-height: 210px;
   }
 
   .infos {

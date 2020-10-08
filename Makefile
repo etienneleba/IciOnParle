@@ -66,3 +66,18 @@ build-symfony-project : composer-install yarn-install yarn-build cache-clear cac
 
 build-symfony-project-prod : composer-install-prod yarn-install yarn-build cache-clear cache-warm #if you use symfony encore
 
+maintenance-soft-on:
+	docker-compose run --rm php php bin/console corley:maintenance:soft-lock on
+
+maintenance-soft-off:
+	docker-compose run --rm php php bin/console corley:maintenance:soft-lock off
+
+maintenance-hard-on:
+	docker-compose run --rm php php bin/console corley:maintenance:lock on
+
+maintenance-hard-off:
+	docker-compose run --rm php php bin/console corley:maintenance:lock off
+
+nginx-reload:
+	docker-compose exec nginx nginx -s reload
+
