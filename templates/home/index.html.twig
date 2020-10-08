@@ -89,19 +89,20 @@
 			<iframe src="https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Fproto%2FwIqxTmjXPcl8IBYOGuH2Uc%2FIciOnParle-Pr%25C3%25A9sentation%3Fnode-id%3D1%253A2%26scaling%3Dmin-zoom"></iframe>
 		</div>
 
-		<div class="mb-5 mt-5 has-text-centered is-size-5">Entrez votre email pour être alerté des nouveaux événements !
-		</div>
+		{% if not app.user %}
+			<div class="mb-5 mt-5 has-text-centered is-size-5">Entrez votre email pour être alerté des nouveaux événements !
+			</div>
 
-		<div class="columns is-centered mt-5">
+			<div class="columns is-centered mt-5">
 
 
-			<div class="column is-one-third">
-				<div class="email-register mt-5">
-					{{ form_start(registeredForm)}}
-					<span class="has-text-danger">{{ form_errors(registeredForm.email)}}</span>
-					<p class="control has-icons-left has-icons-right">
+				<div class="column is-one-third">
+					<div class="email-register mt-5">
+						{{ form_start(registeredForm)}}
+						<span class="has-text-danger">{{ form_errors(registeredForm.email)}}</span>
+						<p class="control has-icons-left has-icons-right">
 
-						{{ form_widget(registeredForm.email,{
+							{{ form_widget(registeredForm.email,{
 							label: false,
 							attr: {
 								class: "input has-icons-left",
@@ -109,20 +110,23 @@
 							}
 						})}}
 
-						<span class="icon is-small is-left">
-							<i class="fas fa-envelope"></i>
-						</span>
-						<button type="submit" class="button is-secondary has-text-white">
-							<i class="fas fa-paper-plane"></i>
-						</button>
-					</p>
-					{{form_end(registeredForm)}}
+							<span class="icon is-small is-left">
+								<i class="fas fa-envelope"></i>
+							</span>
+							<button type="submit" class="button is-secondary has-text-white">
+								<i class="fas fa-paper-plane"></i>
+							</button>
+						</p>
+						{{form_end(registeredForm)}}
 
+					</div>
 				</div>
+
+
 			</div>
 
 
-		</div>
+		{% endif %}
 
 
 	</div>
