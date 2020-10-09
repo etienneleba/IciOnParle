@@ -78,6 +78,16 @@ nav {
     color: $primary;
     font-size: 18px;
   }
+
+  .beta-logo {
+    display: block;
+    border-radius: 13px;
+    background-color: $primary;
+    color: white;
+    font-weight: bold;
+    font-size: 10px;
+    padding: 3px 6px;
+  }
 }
 
 footer {
