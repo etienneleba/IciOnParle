@@ -45,3 +45,12 @@ For the moment the idea is to create :
 - 1 really simple js client that can go on a cdn and cache a lot of data to not overload the business API
 
 Like this, all the parts of the application are scalable.
+
+## Etherpad plugins to add
+
+- ep_align
+- ep_author_hover
+- ep_comments_page
+- ep_copy_paste_images
+- ep_headings2
+- ep_who_did_what

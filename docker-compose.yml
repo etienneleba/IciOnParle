@@ -55,7 +55,11 @@ services:
     user: ${LOCAL_USER}
 
   etherpad:
-    image: etherpad/etherpad
+    image: etherpad/etherpad:1.8.5
+    build:
+      context: https://github.com/ether/etherpad-lite.git#release/1.8.5
+      args:
+        ETHERPAD_PLUGINS: "ep_align ep_author_hover ep_comments_page ep_copy_paste_images ep_headings2 ep_who_did_what"
     ports:
       - ${ETHERPAD_PORT}:9001
     volumes:
