@@ -68,9 +68,9 @@ class RegistrationController extends AbstractController
                 'app_verify_email',
                 $user,
                 (new TemplatedEmail())
-                    ->from(new Address('mailer@ici-on-parle.fr', 'IciOnParle'))
+                    ->from(new Address('contact@ici-on-parle.fr', 'IciOnParle'))
                     ->to($user->getEmail())
-                    ->subject('Please Confirm your Email')
+                    ->subject('IciOnParle : confirmation email')
                     ->htmlTemplate('_emails/confirmationEmail.html.twig')
             );
             // do anything else you need here, like send an email
