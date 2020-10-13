@@ -55,7 +55,6 @@ services:
     user: ${LOCAL_USER}
 
   etherpad:
-    image: etherpad/etherpad:1.8.5
     build:
       context: https://github.com/ether/etherpad-lite.git#release/1.8.5
       args:
@@ -82,3 +81,14 @@ services:
     image: schickling/mailcatcher
     ports:
       - 1080:1080
+
+  cadvisor:
+    image: gcr.io/google-containers/cadvisor:latest
+    container_name: cadvisor
+    ports:
+      - 8800:8080
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
