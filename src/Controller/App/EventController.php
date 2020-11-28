@@ -5,6 +5,7 @@ namespace App\Controller\App;
 use App\Entity\Event;
 use App\Entity\Group;
 use App\Entity\Source;
+use App\Entity\User;
 use App\Entity\UserEvent;
 use App\Form\SourceType;
 use App\Service\EtherpadClient;
@@ -97,10 +98,18 @@ class EventController extends AbstractController
      */
     public function register(Event $event, EntityManagerInterface $em, ValidatorInterface $validator)
     {
+        /** @var User */
+        $user = $this->getUser();
+        if (!$user->isVerified()) {
+            $confirmationPath = $this->generateUrl('app_send_confirmation_email');
+            $this->addFlash('warning', 'Vous devez d\'abord confirmer votre email pour vous inscrire à un événement : <a href="'.$confirmationPath.'">Renvoyer un email</a>');
+
+            return $this->redirectToRoute('app_dashboard');
+        }
         $userEvent = (new UserEvent())
             ->setNbSources(0)
             ->setEvent($event)
-            ->setUser($this->getUser())
+            ->setUser($user)
         ;
 
         $event->addUserEvent($userEvent);

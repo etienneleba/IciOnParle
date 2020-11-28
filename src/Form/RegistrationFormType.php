@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\User;
+use EWZ\Bundle\RecaptchaBundle\Form\Type\EWZRecaptchaType;
+use EWZ\Bundle\RecaptchaBundle\Validator\Constraints\IsTrue as RecaptchaTrue;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -20,6 +22,25 @@ class RegistrationFormType extends AbstractType
             ->add('firstname', TextType::class)
             ->add('lastname', TextType::class)
             ->add('email', EmailType::class)
+            ->add('recaptcha', EWZRecaptchaType::class, [
+                'label' => false,
+                'attr' => [
+                    'options' => [
+                        'theme' => 'clean',
+                        'type' => 'image',
+                        'size' => 'normal',
+                        'defer' => true,
+                        'async' => true,
+                        'callback' => 'onCustomReCaptchaSuccess',
+                        'bind' => 'btn_submit',
+                        'ajax' => false,
+                    ],
+                ],
+                'mapped' => false,
+                'constraints' => [
+                    new RecaptchaTrue(),
+                ],
+            ])
             ->add('plainPassword', PasswordType::class, [
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller

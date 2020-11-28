@@ -13,7 +13,6 @@ services:
       - ./docker/php/custom.ini:/usr/local/etc/php/conf.d/custom.ini
     links:
       - db
-      - mail
     depends_on:
       - db
     user: ${LOCAL_USER}
@@ -64,6 +63,7 @@ services:
     volumes:
       - ./Etherpad/APIKEY.txt:/opt/etherpad-lite/APIKEY.txt
       - ./Etherpad/SESSIONKEY.txt:/opt/etherpad-lite/SESSIONKEY.txt
+      - ./Etherpad/patches/GroupManager.js:/opt/etherpad-lite/src/node/db/GroupManager.js
     depends_on:
       - db
     environment:
@@ -86,7 +86,7 @@ services:
     image: gcr.io/google-containers/cadvisor:latest
     container_name: cadvisor
     ports:
-      - 8800:8080
+      - 8800:8800
     volumes:
       - /:/rootfs:ro
       - /var/run:/var/run:rw

@@ -78,9 +78,13 @@
 
 		</div>
 
+		<div>
+			{{ form_row(registrationForm.recaptcha) }}
+		</div>
+
 
 		<div class="has-text-centered mt-5">
-			<button type="submit" class="button is-primary is-outlined mt-5 px-5" class="btn">S'inscrire</button>
+			<button id="btn_submit" type="submit" class="button is-primary is-outlined mt-5 px-5" class="btn">S'inscrire</button>
 		</div>
 
 		{{ form_end(registrationForm) }}</div>

@@ -10,7 +10,6 @@ use App\Security\EmailVerifier;
 use App\Service\EtherpadClient;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mime\Address;
@@ -73,6 +72,8 @@ class RegistrationController extends AbstractController
                     ->subject('IciOnParle : confirmation email')
                     ->htmlTemplate('_emails/confirmationEmail.html.twig')
             );
+            $this->addFlash('success', 'Un email pour confirmation votre email vient de vous être envoyé');
+
             // do anything else you need here, like send an email
 
             return $guardHandler->authenticateUserAndHandleSuccess(
@@ -89,9 +90,7 @@ class RegistrationController extends AbstractController
             $this->addFlash('error', $error->getMessage());
         }
 
-        $referer = $request->headers->get('referer');
-
-        return new RedirectResponse($referer);
+        return $this->redirectToRoute('index', ['register' => true]);
     }
 
     /**
@@ -114,5 +113,27 @@ class RegistrationController extends AbstractController
         $this->addFlash('success', 'Votre adresse mail a été vérifié.');
 
         return $this->redirectToRoute('app_register');
+    }
+
+    /**
+     * @Route("/app/send/confirmation/email", name="app_send_confirmation_email")
+     */
+    public function sendEmailconfirmation()
+    {
+        $user = $this->getUser();
+        // generate a signed url and email it to the user
+        $this->emailVerifier->sendEmailConfirmation(
+            'app_verify_email',
+            $user,
+            (new TemplatedEmail())
+                ->from(new Address('contact@ici-on-parle.fr', 'IciOnParle'))
+                ->to($user->getEmail())
+                ->subject('IciOnParle : confirmation email')
+                ->htmlTemplate('_emails/confirmationEmail.html.twig')
+        );
+
+        $this->addFlash('success', 'Un email pour confirmer votre email vient de vous être envoyé');
+
+        return $this->redirectToRoute('app_dashboard');
     }
 }

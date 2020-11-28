@@ -63,7 +63,7 @@ class AppFixtures extends Fixture
 
         $manager->persist($event);
 
-        $populator->addEntity(User::class, 10, [
+        $populator->addEntity(User::class, 100, [
             'isVerified' => true,
         ], [
             function (User $user) use ($faker, $event) {
