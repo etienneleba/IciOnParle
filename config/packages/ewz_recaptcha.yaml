@@ -1,4 +1,4 @@
 ewz_recaptcha:
-  public_key: 6LdmPt0ZAAAAAEln44e3PGO7NPfCSeSwoC-O3tVt
-  private_key: 6LdmPt0ZAAAAADYKTpg7yRVNHgkg5nTqZiPAeEG8
+  public_key: '%env(resolve:RECAPTCHA_PUBLIC_KEY)%'
+  private_key: '%env(resolve:RECAPTCHA_PRIVATE_KEY)%'
   # Not needed as "%kernel.default_locale%" is the default value for the locale key
