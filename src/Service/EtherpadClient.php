@@ -10,9 +10,14 @@ class EtherpadClient
     /** @var HttpClientInterface */
     private $client;
 
-    public function __construct(HttpClientInterface $client)
+    private $host;
+    private $apiKey;
+
+    public function __construct(HttpClientInterface $client, string $host, string $apiKey)
     {
         $this->client = $client;
+        $this->host = $host;
+        $this->apiKey = $apiKey;
     }
 
     public function createGroup(): string
@@ -85,7 +90,7 @@ class EtherpadClient
             $keysValues .= '&'.$key.'='.$value;
         }
 
-        $response = $this->client->request('GET', "http://etherpad:9001/api/1.2.14/{$endpoint}?apikey=geffefq".$keysValues);
+        $response = $this->client->request('GET', $this->host."/api/1.2.14/{$endpoint}?apikey=".$this->apiKey.$keysValues);
 
         if ($response->getStatusCode() >= 200 && $response->getStatusCode() < 300) {
             return json_decode($response->getContent(), true);

@@ -36,3 +36,8 @@ services:
 
   App\EventSubscriber\Admin\EventSubscriber:
     tags: ["kernel.event_subscriber"]
+
+  App\Service\EtherpadClient:
+    arguments:
+      $host: '%env(ETHERPAD_HOST)%'
+      $apiKey: '%env(ETHERPAD_API_KEY)%'
