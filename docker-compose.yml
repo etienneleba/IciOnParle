@@ -68,14 +68,14 @@ services:
       - db
     environment:
       DB_HOST: "db"
-      DB_TYPE: mysql
+      DB_TYPE: ${ETHERPAD_DATABASE_TYPE}
       DB_USER: ${MYSQL_USER}
       DB_PASS: ${MYSQL_PASSWORD}
       DB_PORT: 3306
       DB_NAME: ${MYSQL_DATABASE}
       DB_CHARSET: utf8mb4
       REQUIRE_SESSION: "true"
-      ADMIN_PASSWORD: "admin"
+      ADMIN_PASSWORD: ${ETHERPAD_ADMIN_PASSWORD}
 
   mail:
     image: schickling/mailcatcher

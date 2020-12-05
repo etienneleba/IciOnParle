@@ -79,7 +79,6 @@ class EtherpadClient
             'authorID' => $authorId,
             'validUntil' => $validUntil,
         ]);
-
         return $content['data']['sessionID'];
     }
 
