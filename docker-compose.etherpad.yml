@@ -13,7 +13,7 @@ services:
       - "443:443"
     command: '/bin/sh -c ''while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g "daemon off;"'''
     depends_on:
-      - php
+      - etherpad
   certbot:
     image: certbot/certbot
     restart: unless-stopped

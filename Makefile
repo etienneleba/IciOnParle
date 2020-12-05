@@ -9,8 +9,11 @@ up:
 up-prod:
 	docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d nginx php db etherpad
 
+up-app:
+	docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d nginx php db
+
 up-etherpad:
-	docker-compose -f docker-compose.yml -f docker-compose.etherpad.yml up -d etherpad
+	docker-compose -f docker-compose.yml -f docker-compose.etherpad.yml up -d nginx etherpad
 
 down: 
 	docker-compose down
