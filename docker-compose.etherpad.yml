@@ -21,3 +21,11 @@ services:
       - ./docker/certbot/conf:/etc/letsencrypt
       - ./docker/certbot/www:/var/www/certbot
     entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+
+  etherpad:
+    restart: always
+    volumes:
+      - ./Etherpad/settings.json:/opt/etherpad-lite/settings.json
+    environment:
+      ETHERPAD_SSL_PRIVATE_KEY_PATH: ${ETHERPAD_SSL_PRIVATE_KEY_PATH}
+      ETHERPAD_SSL_CERT_PATH: ${ETHERPAD_SSL_CERT_PATH}
