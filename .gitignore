@@ -38,3 +38,5 @@ yarn-error.log
 ###> certbot ###
 
 
+/public/soft.lock
+/public/hard.html
