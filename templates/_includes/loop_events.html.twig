@@ -8,20 +8,20 @@
 					</h4>
 					<p class="is-size-7">{{ event.description}}</p>
 				</div>
-				<div class="infos is-size-5 has-text-primary has-text-weight-bold">
-					<div class="info">
+				<div class="infos is-size-6 has-text-primary has-text-weight-bold">
+					<div class="info-participants">
 						{{event.userEvents | length}}
 						<span class="has-text-secondary">/</span>
 						{{ event.nbMaxUser}}
 						<span class="has-text-secondary is-size-8">inscrits</span>
 					</div>
-					<div class="info">
+					<div class="info-date">
 						<span class="has-text-secondary is-size-8">debut</span>
-						{{ event.startDate | date('d', 'Europe/Paris')}}<span class="has-text-secondary">
-							/</span>
-						{{ event.startDate | date('m', 'Europe/Paris')}}<span class="has-text-secondary">
-							/</span>
-						{{ event.startDate | date('y', 'Europe/Paris')}}
+						{{ event.startDate | date('d', 'Europe/Paris')}}
+						<span class="has-text-secondary">/</span>
+						{{ event.startDate | date('m', 'Europe/Paris')}}&nbsp;
+						<span class="has-text-secondary is-size-8">à</span>
+						{{ event.startDate | date('H', 'Europe/Paris')}}<span class="has-text-secondary">:</span>{{ event.startDate | date('i', 'Europe/Paris')}}
 					</div>
 				</div>
 				{% if target %}

@@ -30,7 +30,9 @@ class EventSubscriber implements EventSubscriberInterface
         if (!($entity instanceof Event)) {
             return;
         }
+        if(!$entity->getIsTest()) {
+            $this->mailerHelper->sendEmailEventCreated($entity);
+        }
 
-        $this->mailerHelper->sendEmailEventCreated($entity);
     }
 }

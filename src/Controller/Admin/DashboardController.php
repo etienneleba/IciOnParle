@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Config;
 use App\Entity\Event;
 use App\Entity\Group;
 use App\Entity\Registered;

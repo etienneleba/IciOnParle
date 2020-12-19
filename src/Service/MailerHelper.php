@@ -2,10 +2,12 @@
 
 namespace App\Service;
 
+use App\Entity\Config;
 use App\Entity\Event;
 use App\Entity\Registered;
 use App\Entity\User;
 use App\Entity\UserEvent;
+use App\Repository\ConfigRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\Exception\TransportException;
@@ -14,7 +16,7 @@ use Symfony\Component\Mailer\MailerInterface;
 class MailerHelper
 {
     private $mailer;
-    private $em;
+    private EntityManagerInterface $em;
 
     public function __construct(MailerInterface $mailer, EntityManagerInterface $em)
     {
@@ -24,12 +26,12 @@ class MailerHelper
 
     public function sendEmail(array $to, string $subject, string $template, array $context = [], array $attachements = []): bool
     {
+
         $email = (new TemplatedEmail())
             ->from('contact@ici-on-parle.fr')
             ->subject($subject)
             ->htmlTemplate($template)
-            ->context($context)
-        ;
+            ->context($context);
 
         foreach ($attachements as $attachement) {
             $email->attachFromPath($attachement);
@@ -57,7 +59,7 @@ class MailerHelper
         foreach ($registereds as $registered) {
             $this->sendEmail(
                 [$registered->getEmail()],
-                'IciOnParle, nouveau événement : '.$event->getTitle(),
+                'IciOnParle, nouveau événement : ' . $event->getTitle(),
                 '_emails/eventCreated.html.twig',
                 [
                     'event' => $event,
@@ -72,7 +74,7 @@ class MailerHelper
         foreach ($users as $user) {
             $this->sendEmail(
                 [$user->getEmail()],
-                'IciOnParle, nouveau événement : '.$event->getTitle(),
+                'IciOnParle, nouveau événement : ' . $event->getTitle(),
                 '_emails/eventCreated.html.twig',
                 [
                     'user' => $user,

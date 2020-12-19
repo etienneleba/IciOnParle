@@ -3,4 +3,4 @@ twig:
 
   globals:
     formGenerator: '@App\Service\FormGenerator'
-    etherpad_host: '%env(ETHERPAD_HOST)%'
+    etherpad_host_front: '%env(ETHERPAD_HOST_FRONT)%'

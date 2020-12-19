@@ -31,12 +31,12 @@ class Event
     private $description;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="datetime")
      */
     private $startDate;
 
     /**
-     * @ORM\Column(type="date", nullable=true)
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $endDate;
 
@@ -105,6 +105,11 @@ class Event
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $pdfPath;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isTest = false;
 
     public function __construct()
     {
@@ -539,6 +544,18 @@ class Event
     public function setPdfPath(?string $pdfPath): self
     {
         $this->pdfPath = $pdfPath;
+
+        return $this;
+    }
+
+    public function getIsTest(): ?bool
+    {
+        return $this->isTest;
+    }
+
+    public function setIsTest(bool $isTest): self
+    {
+        $this->isTest = $isTest;
 
         return $this;
     }

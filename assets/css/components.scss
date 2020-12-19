@@ -85,19 +85,28 @@
     &:before {
       content: "";
       position: absolute;
-      left: 50%;
+      left: 43%;
       top: 0px;
       bottom: 0px;
       height: 100%;
       border-left: 1px solid #dadada;
     }
+
   }
 
-  .info {
+  .info-participants {
     height: 45px;
     line-height: 45px;
     text-align: center;
-    width: 49%;
+    width: 43%;
+
+    display: inline-block;
+  }
+  .info-date {
+    height: 45px;
+    line-height: 45px;
+    text-align: center;
+    width: 55%;
 
     display: inline-block;
   }

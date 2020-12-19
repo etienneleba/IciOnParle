@@ -14,6 +14,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
@@ -52,8 +53,7 @@ class EventCrudController extends AbstractCrudController
     public function createEntity(string $entityFqcn)
     {
         return (new Event())
-            ->setCreatedAt(new DateTime())
-        ;
+            ->setCreatedAt(new DateTime());
     }
 
     public function configureFields(string $pageName): iterable
@@ -66,6 +66,7 @@ class EventCrudController extends AbstractCrudController
                 CollectionField::new('userEvents', 'Particpants'),
                 NumberField::new('nbMaxUser', 'Maximum'),
                 NumberField::new('step', 'Etape'),
+                BooleanField::new('isTest', 'Test'),
             ];
         }
 
@@ -77,26 +78,22 @@ class EventCrudController extends AbstractCrudController
         $startEvent = Action::new('startEvent', '', 'fa fa-play')
             ->linkToCrudAction('startEvent')->displayIf(function (Event $event) {
                 return !$event->getStarted();
-            })
-        ;
+            });
 
         $nextStep = Action::new('nextStep', '', 'fa fa-step-forward')
             ->linkToCrudAction('nextStep')->displayIf(function (Event $event) {
                 return $event->getStarted() && !$event->isFinalStep();
-            })
-        ;
+            });
 
         $endEvent = Action::new('endEvent', '', 'fa fa-stop')
             ->linkToCrudAction('endEvent')->displayIf(function (Event $event) {
                 return $event->getStarted() && !$event->getFinished() && $event->isFinalStep();
-            })
-        ;
+            });
 
         return $actions
             ->add(Crud::PAGE_INDEX, $startEvent)
             ->add(Crud::PAGE_INDEX, $nextStep)
-            ->add(Crud::PAGE_INDEX, $endEvent)
-        ;
+            ->add(Crud::PAGE_INDEX, $endEvent);
     }
 
     public function startEvent(AdminContext $adminContext)
@@ -118,7 +115,9 @@ class EventCrudController extends AbstractCrudController
 
         $this->em->flush();
 
-        $this->mailerHelper->sendEmailEventStarted($event);
+        if (!$event->getIsTest()) {
+            $this->mailerHelper->sendEmailEventStarted($event);
+        }
 
         return $this->redirect($this->get(CrudUrlGenerator::class)->build()->setController(EventCrudController::class)->setAction('index')->generateUrl());
     }
@@ -157,7 +156,9 @@ class EventCrudController extends AbstractCrudController
 
         $this->em->flush();
 
-        $this->mailerHelper->sendEmailEventNextStep($event);
+        if (!$event->getIsTest()) {
+            $this->mailerHelper->sendEmailEventNextStep($event);
+        }
 
         return $this->redirect($this->get(CrudUrlGenerator::class)->build()->setController(EventCrudController::class)->setAction('index')->generateUrl());
     }
@@ -181,8 +182,9 @@ class EventCrudController extends AbstractCrudController
         $event->setPdfPath($pdfFilepath);
 
         $this->em->flush();
-
-        $this->mailerHelper->sendEmailEventFinished($event);
+        if (!$event->getIsTest()) {
+            $this->mailerHelper->sendEmailEventFinished($event);
+        }
 
         return $this->redirect($this->get(CrudUrlGenerator::class)->build()->setController(EventCrudController::class)->setAction('index')->generateUrl());
     }

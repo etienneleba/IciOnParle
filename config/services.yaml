@@ -39,5 +39,5 @@ services:
 
   App\Service\EtherpadClient:
     arguments:
-      $host: '%env(ETHERPAD_HOST)%'
+      $host: '%env(ETHERPAD_HOST_BACK)%'
       $apiKey: '%env(ETHERPAD_API_KEY)%'
