@@ -62,6 +62,7 @@ services:
       - ./Etherpad/APIKEY.txt:/opt/etherpad-lite/APIKEY.txt
       - ./Etherpad/SESSIONKEY.txt:/opt/etherpad-lite/SESSIONKEY.txt
       - ./Etherpad/patches/GroupManager.js:/opt/etherpad-lite/src/node/db/GroupManager.js
+      - ./Etherpad/settings.json:/opt/etherpad-lite/settings.json
       - ./docker/certbot/conf:/opt/etherpad-lite/letsencrypt
     depends_on:
       - db
