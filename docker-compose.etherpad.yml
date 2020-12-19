@@ -24,8 +24,30 @@ services:
 
   etherpad:
     restart: always
+    build:
+      context: https://github.com/ether/etherpad-lite.git#release/1.8.5
+      args:
+        ETHERPAD_PLUGINS: "ep_align ep_author_hover ep_comments_page ep_copy_paste_images ep_headings2 ep_who_did_what"
+    ports:
+      - ${ETHERPAD_PORT}:9001
     volumes:
+      - ./Etherpad/APIKEY.txt:/opt/etherpad-lite/APIKEY.txt
+      - ./Etherpad/SESSIONKEY.txt:/opt/etherpad-lite/SESSIONKEY.txt
+      - ./Etherpad/patches/GroupManager.js:/opt/etherpad-lite/src/node/db/GroupManager.js
+      - ./docker/certbot/conf:/opt/etherpad-lite/letsencrypt
       - ./Etherpad/settings.json:/opt/etherpad-lite/settings.json
+    depends_on:
+      - db
     environment:
+      DB_HOST: "db"
+      DB_TYPE: ${ETHERPAD_DATABASE_TYPE}
+      DB_USER: ${MYSQL_USER}
+      DB_PASS: ${MYSQL_PASSWORD}
+      DB_PORT: 3306
+      DB_NAME: ${MYSQL_DATABASE}
+      DB_CHARSET: utf8mb4
+      REQUIRE_SESSION: "true"
+      ADMIN_PASSWORD: ${ETHERPAD_ADMIN_PASSWORD}
       ETHERPAD_SSL_PRIVATE_KEY_PATH: ${ETHERPAD_SSL_PRIVATE_KEY_PATH}
       ETHERPAD_SSL_CERT_PATH: ${ETHERPAD_SSL_CERT_PATH}
+    user: 5001:1000
