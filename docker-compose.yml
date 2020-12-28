@@ -55,7 +55,7 @@ services:
     build:
       context: https://github.com/ether/etherpad-lite.git#release/1.8.5
       args:
-        ETHERPAD_PLUGINS: "ep_align ep_author_hover ep_comments_page ep_copy_paste_images ep_headings2 ep_who_did_what"
+        ETHERPAD_PLUGINS: "ep_align ep_author_hover ep_comments_page ep_copy_paste_images ep_headings2 ep_who_did_what ep_webrtc"
     ports:
       - ${ETHERPAD_PORT}:9001
     volumes:
@@ -63,6 +63,7 @@ services:
       - ./Etherpad/SESSIONKEY.txt:/opt/etherpad-lite/SESSIONKEY.txt
       - ./Etherpad/patches/GroupManager.js:/opt/etherpad-lite/src/node/db/GroupManager.js
       - ./docker/certbot/conf:/opt/etherpad-lite/letsencrypt
+      - ./Etherpad/settings-dev.json:/opt/etherpad-lite/settings.json
     depends_on:
       - db
     environment:

@@ -78,9 +78,7 @@
    * Name your instance!
    */
   "title": "${TITLE:Etherpad}",
- /*
- * Plugins
- */
+
   "ep_webrtc" : {
     "enabled": true,
     "audio" : {
@@ -155,21 +153,6 @@
    * Default option is set to true
    */
   "showSettingsInAdminPage": "${SHOW_SETTINGS_IN_ADMIN_PAGE:true}",
-
-  /*
-   * Node native SSL support
-   *
-   * This is disabled by default.
-   * Make sure to have the minimum and correct file access permissions set so
-   * that the Etherpad server can access them
-   */
-
-
-  "ssl" : {
-            "key"  : "${ETHERPAD_SSL_PRIVATE_KEY_PATH}",
-            "cert" : "${ETHERPAD_SSL_CERT_PATH}"
-          },
-
 
   /*
    * The type of the database.
