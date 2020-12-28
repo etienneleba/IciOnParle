@@ -24,12 +24,6 @@ services:
 
   etherpad:
     restart: always
-    build:
-      context: https://github.com/ether/etherpad-lite.git#release/1.8.5
-      args:
-        ETHERPAD_PLUGINS: "ep_align ep_author_hover ep_comments_page ep_copy_paste_images ep_headings2 ep_who_did_what"
-    ports:
-      - ${ETHERPAD_PORT}:9001
     volumes:
       - ./Etherpad/APIKEY.txt:/opt/etherpad-lite/APIKEY.txt
       - ./Etherpad/SESSIONKEY.txt:/opt/etherpad-lite/SESSIONKEY.txt
@@ -51,3 +45,5 @@ services:
       ETHERPAD_SSL_PRIVATE_KEY_PATH: ${ETHERPAD_SSL_PRIVATE_KEY_PATH}
       ETHERPAD_SSL_CERT_PATH: ${ETHERPAD_SSL_CERT_PATH}
     user: 5001:1000
+  db:
+    restart: always
