@@ -19,7 +19,7 @@ class MainController extends AbstractController
     {
         $userEvents = $em->getRepository(Event::class)->findAllWithUser($this->getUser());
 
-        $events = $em->getRepository(Event::class)->findBy(['started' => false]);
+        $events = $em->getRepository(Event::class)->findNoneStartedEvents();
 
         $events = array_diff($events, $userEvents);
 

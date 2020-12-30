@@ -32,6 +32,15 @@ class EventRepository extends ServiceEntityRepository
         ;
     }
 
+    public function findNoneStartedEvents()
+    {
+        return $this->createQueryBuilder('e')
+            ->andWhere('e.started = false')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
     // /**
     //  * @return Event[] Returns an array of Event objects
     //  */
