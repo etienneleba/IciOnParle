@@ -85,5 +85,5 @@
 
 {% block javascripts %}
 	{{ parent() }}
-	<script type="text/javascript">window.$crisp=[];window.CRISP_WEBSITE_ID="60c3ac92-0410-4643-a685-d54ce9e10996";(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();</script>
+	<script type="text/javascript">window.$crisp=[];window.CRISP_WEBSITE_ID="{{ crisp_id }}";(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();</script>
 {% endblock %}
